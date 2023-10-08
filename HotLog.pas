@@ -1,5 +1,5 @@
 ﻿unit HotLog;
-
+{$WARN SYMBOL_PLATFORM OFF}
     (*********************************************************************
       v 3.3 (2019-02) Rolf Wetjen (rolf.wetjen@mail.de)
         - CheckLogFiles moved to THotLogWriter.Execute
@@ -760,7 +760,7 @@ begin
   Result:=StringOfChar(AChar[1],ACount);
 end;
 
-funtion FileExistsUTF8 (const FileName: string): boolean;
+function FileExistsUTF8 (const FileName: string): boolean;
 begin
   Result:=SysUtils.FileExists(FileName);
 end;

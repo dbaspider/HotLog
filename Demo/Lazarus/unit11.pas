@@ -337,7 +337,7 @@ begin
   hLog.hlWriter.hlFileDef.ddname:=ChangeFileExt(ExtractFileName(Application.ExeName),'');
   hLog.hlWriter.hlFileDef.append:=true;
   hLog.hlWriter.hlFileDef.gdgMax:=0;
-  hLog.hlWriter.hlFileDef.UseFileSizeLimit:=true;
+  //hLog.hlWriter.hlFileDef.UseFileSizeLimit:=true;
   hLog.hlWriter.hlFileDef.LogFileMaxSize:=OneMegabyte;
   hLog.DisplayFeedBackInto(Memo1);
   hLog.ScrollMemo(true);
