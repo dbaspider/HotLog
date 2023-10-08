@@ -2,9 +2,9 @@
 HotLog for Delphi and Lazarus: LogFile manager, buffered and multithreaded.
 
 # History
-Ver 3.3 SEE https://sourceforge.net/projects/hotlog/
-Ver 2.2 SEE https://github.com/juradoz/HotLog or 
-			https://torry.net/components/files-and-drives/log-files/hotlog
+Ver 3.3 SEE https://sourceforge.net/projects/hotlog/  
+Ver 2.2 SEE https://github.com/juradoz/HotLog or   
+			https://torry.net/components/files-and-drives/log-files/hotlog  
 
 # License
 	//  This unit is freeware, but under copyrights that remain mine for my
