@@ -1,0 +1,406 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1">
+  <title>Logging data</title>
+  <link rel="stylesheet" href="css/HLLayout.css">
+</head>
+<body alink="#000099" link="#3366ff" vlink="#000099">
+
+<table class="Header" width="100%">
+  <tbody>
+    <tr>
+      <td class="AppTitle"><p>THotLog</p></td>
+      <td class="LnkTitle" align="right"><p>[ <a class="sLink" href="https://sourceforge.net/projects/hotlog/">Home</a> ]</p></td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Heading">
+  <tbody>
+    <tr>
+      <td>Logging data</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="ident">
+
+<p>THotLog provides 2 methodes to log strings, and 2 more to log errors
+and exceptions.<br>
+The first one and the last two have overloaded definitions, resulting
+in a total of height procedure available to log anything.</p>
+
+<br>
+
+<table class="Heading">
+  <tbody>
+    <tr>
+      <td>1- Logging variables</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a name="addstr"><br></a>
+<u><b>Without parsing: AddStr( );</b></u></p>
+
+<p>Procedure <b>AddStr (aString: String);</b><br>
+<div class="ident">
+The string aString wil be sent to the parser, which will optionnally add
+the line number if lineNumberring is set, and send the resulting string
+to the writer thread.<br>
+Except for the line number, the string will be written exactly like
+it was when sent.<br>
+<br>
+Each string sent is outputed on a new line.<br>
+</div> <! class="ident">
+</p>
+
+<p><a name="addProc"><br></a>
+<u><b>Parsing involved:</b></u></p>
+
+<p>procedure <b>Add(aString: String); overload;</b><br>
+<div class="ident">
+The string aString wil be sent to the parser, which will attempt to parse
+it, before sending the resulting string or stringList to the writer
+thread.<br>
+(see later: parsing tags).<br>
+<br>
+(Embeding tags is not an obligation: if no tag is met, the string
+is simply sent to the writer, like AddStr( );<br>
+</div> <! class="ident">
+</p>
+
+<p><a name="AddStringList"><br></a>
+Procedure <b>Add (aStringList: TStringList); overload;</b><br>
+<div class="ident">
+Like above, but works with a TStringList instance.<br>
+Each string will be parsed and the resulting stringList will be sent to the writer thread for
+output.<br>
+<br>
+It provides a way to split preparation and logging, or to store
+complex definitions variables to be parsed.<br>
+<br>
+THotLog variables "<b>header</b>" and "<b>footer</b>" are examples of such
+stringList usage:<br>
+<pre>
+Self.header := TstringList.Create;
+  With Self.Header Do
+  Begin
+    Add(<span class="const">'{/}{LNumOff}{*80*}'</span>);
+    Add(<span class="const">'>>>> Start {App_name}  v {App_ver}{80@}{&}{dte} {hms}{&}'</span>);
+    Add(<span class="const">'{@12}From : {App_path}'</span>);
+    Add(<span class="const">'{@12}Prms : {App_prm-}{/}'</span>);
+  End;
+
+  Self.footer := TStringList.Create;
+  With self.Footer Do
+  Begin
+    Add(<span class="const">'{LNumOff}'</span>);
+    Add(<span class="const">'<<<< Stop  {App_name}{80@}{&}{dte} {hms}{&}'</span>);
+    Add(<span class="const">'{*80*}{/}'</span>);
+  End;</pre>
+They are added to the log file that way:<br>
+<pre>
+hLog.Add (header); 
+...
+hLog.Add (footer);
+</pre>
+and the result will look like this:
+<pre><samp>********************************************************************************
+>>>> Start HotLogTest.exe  v 1.0.0.4                         2004-03-09 23:38:54
+           From : C:\Program Files\Borland\Delphi6\Projects\HotLog\
+           Prms : (No params)
+
+...
+
+<<<< Stop  HotLogTest.exe                                    2004-03-09 23:38:55
+********************************************************************************
+</samp></pre>
+</div> <! class="ident">
+</p>
+
+<p><a name="addConst"><br></a>
+Procedure <b>Add(style: TVarRecStyle; aConstArray: Array of Const); overload;</b><br>
+<div class="ident">
+Like above again, but works with an<b>array of const</b>.<br>
+This array can contain anything. The resulting stringlist will be sent
+to the writer thread for.<br>
+<br>
+This is a way to output variables whithout regards to their type.<br>
+The first argument decides the output format of the elements in the second one.<br>
+It can be <b>vsNone, vsBasic</b> or, <b>vsExtended</b>.<br>
+The 2nd argument (<b>aConstArray</b>) is an array of const.<br>
+It's values will be formatted depending on the first one.<br>
+<br>
+<i>hLog.Add(style:TVarRecStyle; aConstArray:TConstArray) examples of use:</i></p>
+<br>
+<p><u>1: Using aStyle := vsNone;</u><br>
+<pre>
+var i: real;
+begin
+  Randomize;
+  i := Random;
+  hLog.Add(vsNone,[<span class="const">'aString'</span>,<span class="const">'{/}another one, followed by integers'</span>,<span class="const">1</span>,<span class="const">2</span>,<span class="const">3</span>,<span class="const">'{/} and now, the "i" value :'</span>,i]);
+end;
+</pre>
+Result:
+<pre><samp>aString
+another one, followed by integers123
+and now, the "i" value :0,502231817925349
+</samp></pre>
+<br>
+And all in one line:
+<pre>
+hLog.Add(vsNone,[<span class="const">'aString'</span>,<span class="const">'another one, followed by integers'</span>,<span class="const">1</span>,<span class="const">2</span>,<span class="const">3</span>,<span class="const">'and now, the "i" value :'</span>,i]);
+</pre>
+will result in
+<pre><samp>aStringanother one, followed by integers123and now, the "i" value :0,502231817925349
+</samp></pre>
+The values are restituted like you sent them, without spaces or anything like that.<br>
+It's up to you to do the formating, when using <b>aStyle=vsNone.</b></p>
+You'll find another example of vsNone usage in the <a href="Tags_07c.htm#crlf">crlf tag section</a>.</p><br>
+<br>
+<p><u>2: Using aStyle := vsBasic;</u><br>
+<br>
+The elements in the array will be separated by colons and surrounded by parenthesis.
+Taking again the above example but removing the formating tags:
+<pre>
+hLog.Add(vsExtended,[[<span class="const">'aString'</span>,<span class="const">'{/}another one, followed by integers'</span>,<span class="const">1</span>,<span class="const">2</span>,<span class="const">3</span>,<span class="const">'{/} and now, the "i" value :'</span>,i]);
+</pre>
+will output:
+<pre><samp>(aString; another one, followed by integers; 1; 2; 3; and now, the "i" value :; 0,502231817925349);</samp></pre>
+<br>
+<u>3: Using aStyle := vsExtended;</u><br>
+<br>
+Writes all available information to the log file:
+<pre>
+hLog.Add(vsExtended,[[<span class="const">'aString'</span>,<span class="const">'{/}another one, followed by integers'</span>,<span class="const">1</span>,<span class="const">2</span>,<span class="const">3</span>,<span class="const">'{/} and now, the "i" value :'</span>,i]);
+</pre>
+will output:
+<pre><samp>AnsiString  :  aString
+AnsiString  :  another one, followed by integers
+Integer     :  1
+Integer     :  2
+Integer     :  3
+AnsiString  :  and now, the "i" value :
+Extended    :  0,502231817925349
+</samp></pre>
+<br>
+<font color="red">An array can not be passed as an argument to the function.</font><br>
+You can pass arrays to hLog.Add( )
+<pre>
+var  TWinVer: Array of string;
+  ...
+  TWinVer[0] := 'Unknown';
+  TWinVer[1] := '16b';
+  TWinVer[2] := '32b';
+  hLog.Add(vsExtended,['This system could be ', TWinVer2Str]);
+</pre>
+but the result is not as expected:
+<pre><samp>AnsiString  :  This system could be
+Pointer     :  ^(0012F5B8)
+</samp></pre></p>
+<div style="background-color: rgb(255, 255, 221); color: rgb(0, 0, 153); width: 80%; padding: 20px;">
+<font color="red">Why does THotLog consider arrays to be 
+generic pointers?</font><br>
+<br>
+<font color="blue">Well, basically, it comes from the fact that 
+ConstArray transmitted to hLog may contain anything, including args 
+received by your calling routine, or variables internal to that
+routine. But ('and yet'?) such values may not exist long enough:
+Memory is assigned as long as the routine works, and released as soon as 
+your programm exits it.<br>
+Then, parts (or all) of the elements of such "arrays of const" may no 
+longer exist just a few CPU cycles after your call to hLog.add() procedure.
+Especially when used to log exceptions. It is even highly possible that they do not
+exist anymore, when HLParser handles the message (it had maybe a lot of other 
+messages to work with before this one, or was sleeping, and experiments 
+a "hard wakeup".<br>
+Moreover, THotLog has to work as few as possible in the main thread, 
+leaving the work to the parser, writer (and eventualy "feedback") 
+threads. In order to meet this objective, and knowing that values into 
+the array of Const received may be freed as soon as hLog.Add() returns, 
+hLog copies everything it can, and passes the result to the parser 
+(as a new TConstArray). But in the course of this copy, only the most basic 
+elements are copied.<br>
+<br>
+According to <a href="http://rvelthuis.bei.t-online.de/index.htm">Rudy Velthuis (TeamB)</a>:<br>
+<i>"VPointer and VObject don't have proper copy semantics so it is impossible 
+to write generic code that copies the contents."</i><br>
+<br>
+And it's not possible to make a copy of everything (imagine an array 
+containing a whole db table ...). Then as long as VPointers and 
+VObjects are concerned, hLog simply transmits to the parser their "vType"
+kind, and some basic information ("is the pointer Nil?", "what is the
+className of this object?", ...), nothing more.</font>
+</div> <!style="background-color: rgb(255, 255, 221); color: rgb(0, 0, 153); width: 80%;"
+<br>
+<p><u>Avoiding memory leaks:</u><br>
+<br>
+The array of Const that you pass to hLog.Add(...) is your
+property. hLog will make a copy of it, and free this copy when no longer 
+needed. But it doesn'tchange anything to YOUR array. This means
+that if it is declared somewhere else than in the calling function itself 
+(thus being not freed when you'll leave it), you should free its contents, 
+and set its length to 0 as soon as it is no longer needed, after hLog.Add() returns).</p>
+
+<br>
+
+<table class="Heading">
+  <tbody>
+    <tr>
+      <td>2- Logging exceptions and errors</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a name="addException"><br></a>
+Procedure <b>AddException(ex: Exception; err: Integer=0; freeAfterPost: Boolean=False);</b> overload;<br>
+<div class="ident">
+<p>This is the most basic way to log an exception raised 
+during code execution:<br>
+<b>ex</b> is, not so surprisingly, the exception occured.<br>
+<b>err</b> is reserved for internal use.<br>
+If <b>freeAfterPost</b> is set to True, ex will be freed by the 
+hLog.AddException procedure. Otherwise not.<br>
+<br>
+This is an example:<br>
+<pre>
+Function DoSomethingAndDivide(x,y: Integer): Integer;
+Begin
+  Result := -1;  
+  TRY
+    ...
+    Result := Abs(x div y);         <span class="comment">// If y is worth zero, an EZeroDivide exception will appear.</span>
+  EXCEPT         
+    On E:Exception Do
+      hLog.AddException(E);         <span class="comment">// nothing else to do.</span>
+      ...
+  END;
+End;
+</pre>
+With an EZeroDivide exception and hLog.SetErrorCaption(<span class="const">'***    E R R O R    ***'</span>)
+the result will be like this:
+<pre><samp>***********************
+***    E R R O R    ***   "Division par zéro"
+*********************** </samp></pre>
+To logg more informations, hLog provides an overloaded definition of the 
+AddException procedure, with tha ability to handle much more things:</p>
+</div> <! class="ident">
+
+<p><a name="AddExcArgs"><br></a>
+Procedure <b>AddException(ex: Exception; func: String; args: Array of const; err: Integer=0; freeAfterPost: Boolean=False);</b> overload;<br>
+<div class="ident">
+<p>This is the evolved way to logg an exception raising during code
+execution:<br>
+Two new parametres are defined:
+<b>func</b> is the name of the function in which the exception occurs.<br>
+<b>args</b> is an array of const that may handle anything you want.<br>
+The other parameters are the same than above.<br>
+<br>
+This is an example:<br>
+<pre>
+Function DoSomethingAndDivide(Sender: TObject; x,y,z: Integer; aString: String): Integer;
+Begin
+  Result := <span class="const">-1</span>;  
+  TRY
+    ...
+    Result := Abs(x div (y*z));                                           <span class="comment">// If y or z are worth zero, an EZeroDivide exception will appear.</span>
+  EXCEPT         
+    On E:Exception Do
+      hLog.AddException(E,'DoSomethingAndDivide',[Sender,x,y,z,aString]); <span class="comment">// nothing else to do.</span>
+      ...
+  END;
+End;
+</pre>
+</p>
+<p>Like above, hLog.SetErrorCaption( ) was called as hLog.SetErrorCaption(<span class="const">'***    E R R O R    ***'</span>).</p>
+The output will be:
+<pre><samp>********************************************************************************************
+***    E R R O R    ***   "Division par zéro" in function :
+***********************    DoSomethingAndDivide( TObject    : Button1 (TButton, "Compute");
+                                                 Integer    : 1;
+                                                 Integer    : 0; 
+                                                 Integer    : -547; 
+                                                 AnsiString : Some string pointed at by aString  )
+*********************************************************************************************</samp></pre>
+If SetErrorViewStyle received <b>vsBasic</b>, the result would have been:
+<pre><samp>***    E R R O R    ***   "Division par zéro" in DoSomethingAndDivide(Button1,1,0,-547,Some string pointed at by aString);</samp></pre></p>
+</div <! class="ident">
+
+<p><a name="addErr"><br></a>
+Procedure <b>AddError(err: Integer);</b> overload;<br>
+<div class="ident">
+This is the simbling function of the basic form of hLog.Add() above.<br>
+It is intended to handle errors.<br>
+It will output the same things than the functions above, and the
+error number (after the line prefetch, and before the error message).<br>
+<br>
+<b>err</b> is the error number.</p>
+</div <! class="ident">
+
+<p><a name="addErrArgs"><br></a>
+Procedure <b>AddError(err: Integer; func: String; args : Array of const);</b> overload;<br>
+<div class="ident">
+This is the simbling function of the evolved form of hLog.Add() above.<br>
+It is intended to handle errors.<br>
+It will output the same things than the functions above, and the
+error number (after the line prefetch, and before the error message).<br>
+<br>
+<b>err</b> is the error number. Other arguments unchanged.</p>
+</div> <! class="ident">
+
+<br>
+
+<p>Output examples:<br>
+<pre>
+hLog.AddError(err);
+<samp>***********************
+***    E R R O R    *** (15) "Le lecteur spécifié est introuvable"
+***********************</samp>
+
+hLog.AddError(err,<span class="const">'MyProc'</span>,[]);
+<samp>********************************************************************************************
+***    E R R O R    *** (15) "Le lecteur spécifié est introuvable" in MyProc
+********************************************************************************************</samp></pre>
+<span class="const">15</span> is number passed as <b>err</b>.<br>
+The error description is the return value of <b>SysErrorMessage(err)</b>.<br>
+The array of const can be empty.</p>
+<br>
+<p><font color="red">Warning :</font><br>
+These two functions need to receive the <b>error code</b>. But reading it
+seems to reset it sometimes.<br>
+If you want to use it, you'll have to first copy it's value into
+an integer variable when reading, before sending it:<br>
+<pre>If Form1.OpenDialog1.Execute then
+begin
+  <span class="comment">// Let's search an imaginary file, modifying the name of an existing one:</span>
+  AssignFile(F, Form1.OpenDialog1.FileName +'x');
+  {$I-}
+  Reset(F);
+  <span class="comment">// It seems that IOresult is reseted to 0 as soon as you read it,</span>
+  <span class="comment">// We'll then store it before usage ...</span>
+  err := IOResult;          <span class="comment">// IOResult is now worth 0: showMessage(IntToStr(IOresult)); -> "0"!</span>
+  If err &lt&gt; 0 then
+     hLog.AddError(err);
+  {$I+}
+End;</pre></p>
+</div> <! class="ident">
+
+<p>&nbsp;</p>
+
+<table class="Footer" width="100%">
+  <tbody>
+    <tr>
+      <td class="AppTitle"><p>THotLog</p></td>
+      <td class="LnkTitle" align="right"><p><a class="sLink" href="FeedBack_05c.htm">&laquo;  Previous</a> | <a class="sLink" href="Tags_07a.htm">Next &raquo;</a></p></td>
+    </tr>
+  </tbody>
+</table>
+
+</body>
+</html>

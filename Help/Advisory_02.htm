@@ -1,0 +1,148 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1">
+  <title>Warnings and informations</title>
+  <link rel="stylesheet" href="css/HLLayout.css">
+</head>
+<body link="#3366ff" vlink="#000099" alink="#000099">
+
+<table class="Header" width="100%">
+  <tbody>
+    <tr>
+      <td class="AppTitle"><p>THotLog</p></td>
+      <td class="LnkTitle" align="right"><p>[ <a class="sLink" href="https://sourceforge.net/projects/hotlog/">Home</a> ]</p></td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Heading">
+  <tbody>
+    <tr>
+      <td>Warnings, and some technical insights</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="ident">
+
+<p><a name="instancesDecl"><br></a>
+<p><b>THotLog instances:</b></p>
+
+<p>THotLog is an object. You can declare as many instances of it as you want,
+if you need to manage several log files in an application. Just remember that 
+each instance will create at least two new threads (and up to three, if you 
+choose to give your user somme visual feedback in a TMemo for each one).</p>
+
+<p>You can start logging early in your code, but I didn't test earlier
+than from within FormCreate().</p>
+
+<p>The logging threads may stay alive after the closing of your main form, 
+until everything has been written. It can still add things from within the 
+FormClose() event handler. As above, I didn't try later in the application 
+destruction course. </p>
+
+<br>
+
+<p><b>Exceptions raising during debbuging:</b></p>
+
+<p>HotLog makes a huge use of <b>TRY/EXCEPT</b> 
+blocks when running. They are used as tools, to circumvent dangling pointers, 
+for example, or to find previous log files, when using generation based ones, 
+and in many more cases (calculations, aso.). Again, 
+<b>TRY/EXCEPT blocks ARE tools</b>, wonderfull 
+ones, and - obviously - <b>such exceptions won't 
+appear at run-time</b>.<br>
+If some do raise at debug time (and some WILL raise...), simply hit Run/Run, 
+as stated in Delphi's help, and as you would normally do with such exceptions, 
+to go on.</p>
+
+<p style="color: rgb(204, 0, 0);"><a name="memoWarning"><br></a>
+<b>MEMO USAGE WARNING:</b></p>
+
+<p>If you use a memo to provide visual feedBack to your user, and if that 
+memo is NOT on your main form, you <b>NEED</b> 
+to call tHotLog.<b>StopVisualFeedBack</b> 
+and read it's return code before closing your memo.<br>
+The return will be "True" if the concerned thread could be notified to stop 
+accessing the memo, "False" otherwise. In this last case, choose 
+"MyMemoForm.hide" instead of "MyMemoForm.Close": Adding lines into the memo 
+is made within the main thread (your application's VCL thread), using the 
+Synchronise() methode. If the memo no longer exists, your main thread could 
+crash because of the use of a Handle no longer valid (the one of the no
+longer existing memo)...</p>
+
+<br>
+<p style="color: rgb(204, 0, 0);"><b>Limits:</b></p>
+
+<p>There's a feature that is usually present in logging utilities, but 
+not in THotlog: The level of error management.<br>
+I didn't add such a feature in THotLog, because I strongly believe that 
+you only, the programmer, knows what is to be logged, and what not.
+Deciding this, should not be your user's job: He surely knows 
+nothing about your programm's internals (and most probably doesn't 
+want to...).<br>
+So why outputing things of little to no interrest? Either what happens 
+is essential (that means that what you decide to output contains 
+informations that will help you to debug problems occuring on your user's 
+computers), and then it has to be logged, or it is not, and then why to bother?</p>
+
+<br>
+<p><b>Bugs:</b></p>
+
+<p>Well, actually none. If you find some, please let me know:  <a href="mailto:rolf.wetjen@mail.de?subject=HotLog">rolf.wetjen@mail.de</a></p>
+
+</div> <! class="ident">
+
+<p>&nbsp;</p>
+<table class="Heading">
+  <tbody>
+    <tr>
+      <td style="color: rgb(255, 255, 255); font-weight: bold;">Why a unit instead of a component? Why so big?</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="ident">
+
+<p>IDE cross generation components installing seems to be an issue for
+many people, believing some discussions boards, whereas simply using a
+unit can be easily done by anybody, whatever be his/her version of
+Delphi.</p>
+
+<p>Moreover, HotLog unit contains code specific to D6, (or at least D4-5).
+An example of this is the huge use of Int64 type. Owners of older
+versions will be able to change such specific code, in order to use it.</p>
+
+<p>Finally, I realy appreciate to see others source code. I learned much
+more by reading code than theorical papers, general books, aso. (This
+doesn't mean that I consider my code to be an example of what is to be
+done ;-). Some of you may even consider that it is an example of
+what NOT to do. Well, if they let me know sound explanations, I'll go
+on learning, which is allways a good thing...).</p>
+
+<p>About the size of the unit: A lot of things where to be done by the
+main object and it's "sub-objects".<br>
+If I'd make it a component, or if I'd keep it for myself, I would have
+make at least 6 units (one for THotLog itself, one for each subthread,
+one for "common methodes", like accessing the registry, one for the
+timer object definition). But the idea was to distribute it...</p>
+
+</div> <! class="ident">
+
+<p>&nbsp;</p>
+
+<table class="Footer" width="100%">
+  <tbody>
+    <tr>
+      <td class="AppTitle"><p>THotLog</p></td>
+      <td class="LnkTitle" align="right"><p><a class="sLink" href="Summary_01.htm">&laquo; Previous</a> | <a class="sLink" href="Quickstart_03.htm">Next &raquo;</a></p></td>
+    </tr>
+  </tbody>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,456 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<HTML>
+<HEAD>
+<meta name="GENERATOR" content="Microsoft&reg; HTML Help Workshop 4.1">
+<!-- Sitemap 1.0 -->
+</HEAD><BODY>
+<OBJECT type="text/site properties">
+	<param name="ImageType" value="Folder">
+</OBJECT>
+<UL>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="What's new, acknowledgements, etc.">
+		<param name="Local" value="Summary_01.htm">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Warnings &amp; infos">
+		<param name="Local" value="Advisory_02.htm">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Quick start">
+		<param name="Local" value="Quickstart_03.htm">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="THotLog instances">
+		<param name="Local" value="Instance_04.htm">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Sample application">
+		<param name="Local" value="FileStp_05a.htm#sampleapplication">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Setup">
+		<param name="Local" value="FileStp_05a.htm">
+		</OBJECT>
+	<UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Log file properties">
+			<param name="Local" value="FileStp_05a.htm">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="THotLog properties">
+			<param name="Local" value="HLStp_05b.htm">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Visual feedback">
+			<param name="Local" value="FeedBack_05c.htm">
+			</OBJECT>
+	</UL>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Logging data">
+		<param name="Local" value="Logging_06.htm">
+		</OBJECT>
+	<UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Methodes">
+			<param name="Local" value="Logging_06.htm">
+			</OBJECT>
+	</UL>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Tags">
+		<param name="Local" value="Tags_07a.htm">
+		</OBJECT>
+	<UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Standalone Tags">
+			<param name="Local" value="Tags_07a.htm#standalone">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Inline Tags: Information Retrieval">
+			<param name="Local" value="Tags_07b.htm#inlineInformation">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Inline Tags: String Formating">
+			<param name="Local" value="Tags_07c.htm#inlineFormat">
+			</OBJECT>
+	</UL>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Monitoring RAM and Heap">
+		<param name="Local" value="Monitoring_08.htm">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Timing code">
+		<param name="Local" value="Timing_09.htm">
+		</OBJECT>
+	<UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="TQTimer properties">
+			<param name="Local" value="Timing_09.htm#properties">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Measuring">
+			<param name="Local" value="Timing_09.htm#measure">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Retrieving values">
+			<param name="Local" value="Timing_09.htm#results">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Example of use">
+			<param name="Local" value="Timing_09.htm#TQTExample">
+			</OBJECT>
+	</UL>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Properties, functions and tags list">
+		<param name="Local" value="Instance_04.htm">
+		</OBJECT>
+	<UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Create, Free">
+			<param name="Local" value="Instance_04.htm">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="StartLogging">
+			<param name="Local" value="Instance_04.htm#startLogging">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Log file">
+			<param name="Local" value="FileStp_05a.htm">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="ddname">
+				<param name="Local" value="FileStp_05a.htm#ddname">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="path">
+				<param name="Local" value="FileStp_05a.htm#path">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="ext">
+				<param name="Local" value="FileStp_05a.htm#ext">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="fileName">
+				<param name="Local" value="FileStp_05a.htm#fileName">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="append">
+				<param name="Local" value="FileStp_05a.htm#append">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="GdgMax">
+				<param name="Local" value="FileStp_05a.htm#GdgMax">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="OpMode">
+				<param name="Local" value="FileStp_05a.htm#OpMode">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="LogFileMaxSize">
+				<param name="Local" value="FileStp_05a.htm#LogFileMaxSize">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="UseSafeFileNames">
+				<param name="Local" value="FileStp_05a.htm#UseSafeFileNames">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="SafeGdgMax">
+				<param name="Local" value="FileStp_05a.htm#SafeGdgMax">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="THotLog setup">
+			<param name="Local" value="HLStp_05b.htm">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="SetErrorCaption">
+				<param name="Local" value="HLStp_05b.htm#errorCaption">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="SetErrorViewStyle">
+				<param name="Local" value="HLStp_05b.htm#errorViewStyle">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="SetRulerLength">
+				<param name="Local" value="HLStp_05b.htm#rulerLength">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="ModifyLineNumbering">
+				<param name="Local" value="HLStp_05b.htm#modifyLineNum">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Visual feedBack">
+			<param name="Local" value="FeedBack_05c.htm">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="DisplayFeedBackInto">
+				<param name="Local" value="FeedBack_05c.htm#memoAssign">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="StopVisualFeedBack">
+				<param name="Local" value="FeedBack_05c.htm#memoStopFB">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="ScrollMemo">
+				<param name="Local" value="FeedBack_05c.htm#memoScroll">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="MemoLimit">
+				<param name="Local" value="FeedBack_05c.htm#memoLimit">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Logging process">
+			<param name="Local" value="Logging_06.htm">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="AddStr(aString : String);">
+				<param name="Local" value="Logging_06.htm#addstr">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Add(aString : String);">
+				<param name="Local" value="Logging_06.htm#addProc">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Add(aStringList : TStringList);">
+				<param name="Local" value="Logging_06.htm#AddStringList">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Add(style:TVarRecStyle; aConstArray:Array of Const);">
+				<param name="Local" value="Logging_06.htm#addConst">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="AddException(ex:Exception; err:Integer=0; freeAfterPost:Boolean=False);">
+				<param name="Local" value="Logging_06.htm#addException">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="AddException(ex:Exception; func:String; args : Array of const;err:Integer=0; freeAfterPost:Boolean=False);">
+				<param name="Local" value="Logging_06.htm#AddExcArgs">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="AddError(err:Integer);">
+				<param name="Local" value="Logging_06.htm#addErr">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="AddError(err:Integer; func:String; args : Array of const); ">
+				<param name="Local" value="Logging_06.htm#addErrArgs">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="THeapMRec record definition">
+				<param name="Local" value="Monitoring_08.htm#THeapMRec">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="HeapMonitor(hmExtra:String=''; directOutput:Boolean=False):THeapMRec;">
+				<param name="Local" value="Monitoring_08.htm">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="ResetHeapTable;">
+				<param name="Local" value="Monitoring_08.htm">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="RamMonitor(hmExtra:String=''; directOutput:Boolean=False) : THeapMRec;">
+				<param name="Local" value="Monitoring_08.htm">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="ResetRamTable;">
+				<param name="Local" value="Monitoring_08.htm">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="TQTimer">
+				<param name="Local" value="Timing_09.htm">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="TQTimer properties">
+				<param name="Local" value="Timing_09.htm#properties">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Functions">
+				<param name="Local" value="Timing_09.htm#measure">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Retrieving values">
+				<param name="Local" value="Timing_09.htm#results">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Standalone tags">
+			<param name="Local" value="Tags_07a.htm">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="{OSVI}">
+				<param name="Local" value="Tags_07a.htm#osvi">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="{CPUI};">
+				<param name="Local" value="Tags_07a.htm#cpui">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="{MEM}">
+				<param name="Local" value="Tags_07a.htm#mem">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="{Disk}">
+				<param name="Local" value="Tags_07a.htm#disk">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="{Ram}">
+				<param name="Local" value="Tags_07a.htm#ram">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="{Heap}">
+				<param name="Local" value="Tags_07a.htm#heap">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="{Timers}">
+				<param name="Local" value="Tags_07a.htm#Timers">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="{ruler}">
+				<param name="Local" value="Tags_07a.htm#ruler">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="{ruler+}">
+				<param name="Local" value="Tags_07a.htm#ruler">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Inline tags">
+			<param name="Local" value="Tags_07b.htm">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="{Heap-}">
+				<param name="Local" value="Tags_07b.htm#memoryinline">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="{Heap--}">
+				<param name="Local" value="Tags_07b.htm#memoryinline">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="{Heap---}">
+				<param name="Local" value="Tags_07b.htm#memoryinline">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="{Ram-}">
+				<param name="Local" value="Tags_07b.htm#memoryinline">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="{Ram--}">
+				<param name="Local" value="Tags_07b.htm#memoryinline">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="{Ram---}">
+				<param name="Local" value="Tags_07b.htm#memoryinline">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="{disk-}">
+				<param name="Local" value="Tags_07b.htm#memoryinline">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="{disk--}">
+				<param name="Local" value="Tags_07b.htm#memoryinline">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="{disk---}">
+				<param name="Local" value="Tags_07b.htm#memoryinline">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="{app_name}">
+				<param name="Local" value="Tags_07b.htm#application">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="{app_path}">
+				<param name="Local" value="Tags_07b.htm#application">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="{app_lfn}">
+				<param name="Local" value="Tags_07b.htm#application">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="{app_ver}">
+				<param name="Local" value="Tags_07b.htm#application">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="{app_prm-}">
+				<param name="Local" value="Tags_07b.htm#application">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="{app_prm}">
+				<param name="Local" value="Tags_07b.htm#application">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="{dte}">
+				<param name="Local" value="Tags_07b.htm#datetime">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="{hms}">
+				<param name="Local" value="Tags_07b.htm#datetime">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="{now}">
+				<param name="Local" value="Tags_07b.htm#datetime">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="{gtc}">
+				<param name="Local" value="Tags_07b.htm#datetime">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="{dhg}">
+				<param name="Local" value="Tags_07b.htm#datetime">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="{lNum}">
+				<param name="Local" value="Tags_07b.htm#lNumbers">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="{lNumOff}">
+				<param name="Local" value="Tags_07b.htm#lNumbers">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Formating strings">
+			<param name="Local" value="Tags_07c.htm">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="{@nnn} : Left alignment">
+				<param name="Local" value="Tags_07c.htm#at_tag">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="{nnn@} : Right alignment">
+				<param name="Local" value="Tags_07c.htm#at_tag">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="{@nnn@} : Centering">
+				<param name="Local" value="Tags_07c.htm#at_tag">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="{*nnnX} : Padd up to ...">
+				<param name="Local" value="Tags_07c.htm#padd_tag">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="{&amp;} : Block">
+				<param name="Local" value="Tags_07c.htm#and_tag">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="{} : Empty tag">
+				<param name="Local" value="Tags_07c.htm#emptytag">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="{/} : CRLF">
+				<param name="Local" value="Tags_07c.htm#crlf">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="{{} and {}} : Brackets">
+				<param name="Local" value="Tags_07c.htm#brackets">
+				</OBJECT>
+		</UL>
+	</UL>
+</UL>
+</BODY></HTML>

@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1">
+  <title>Quick start</title>
+  <link rel="stylesheet" href="css/HLLayout.css">
+</head>
+<body link="#3366ff" vlink="#000099" alink="#000099">
+
+<table class="Header" width="100%">
+  <tbody>
+    <tr>
+      <td class="AppTitle">
+      <p>THotLog</p>
+      </td>
+      <td class="LnkTitle" align="right">
+      <p>[ <a class="sLink" href="https://sourceforge.net/projects/hotlog/">Home</a> ]</p></td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Heading">
+
+  <tbody>
+    <tr>
+      <td>Quickstart</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>&nbsp;</p>
+
+<div class="ident">
+
+<p>In order to make your life easier, the unit HotLog.pas declares an
+instance of THotLog, and calls its constructor automatically, as soon
+as your programm is loaded (in fact, as soon as the HotLog unit's part
+of your programm is loaded).<br>
+<br>
+This instance is called "<b>hLog</b>".
+It is the object instance you'll use to access HotLog.pas/THotLog
+properties and routines.<br>
+<br>
+All the following examples will allways use it. However, and as stated
+before, THotLog being an object, you can declare as many instances of
+it as you want.</p>
+
+<p>&nbsp;</p>
+
+<p><b>To use THotLog you will have to:</b><br>
+<br>
+<b>1.</b> Extract / copy <b>HotLog.pas</b> into the directory of your 
+application.<br>
+<br>
+<b>2.</b> Add "<b>Hotlog</b>" to the <b>uses</b> clauses
+of your project file (.dpr for Delphi or .lpr for Lazarus) and of all
+units that may use THotLog:<br>
+<div class="ident">
+Uses {...}, <b>HotLog</b>;<br>
+<br>
+</div> <! class="ident">
+<b>3.</b> Somewhere in your application creation scenario, add a call 
+to the <a href="Instance_04.htm#startLogging"><b>StartLogging</b></a> methode 
+of THotLog instance. A good place example would be in the form create event
+handler:
+<br>
+<div class="ident"><pre>
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+  ...
+  <b>hLog.</b><a href="Instance_04.htm#startLogging">StartLogging</a>;                          <span class="comment">// THotLog's threads are now created and running. You can start logging data.</span>
+  ...
+end;</pre>
+<i>Remember that <u>you don't have to instanciate hLog</u> (using its 
+constructor, "Create"), because the instance hLog already exists.</i><br>
+<br>
+<i>Also remember that you don't need this step if the first logging procedure 
+is a hLog.<b>Add...</b> one. hLog.<b>Add...</b> calls <b>hLog.StartLogging</b>
+internally if needed.   
+</div> <! class="ident">
+<br>
+<br>
+<b>4.</b> You can now start logging data, using one the provided methodes,
+like<br>
+<br>
+<div class="ident">
+<pre><b>hLog</b>.<a href="Logging_06.htm#addproc">Add</a>(aString: String);                    <span class="comment">//<b>hLog.Add( )</b> overloaded procedures imply parsing.</span>
+<b>hLog</b>.<a href="Logging_06.htm#addproc">Add</a>(aStringList: 
+TStringList);
+<b>hLog</b>.<a href="Logging_06.htm#addproc">Add</a>(aConstArray : Array of Const);
+<b>hLog</b>.<a href="Logging_06.htm#addstr">AddStr</a>(aString: String);                 <span class="comment">//<b>hLog.AddStr( )</b> avoids parsing.</span>
+</pre>
+</div> <! class="ident">
+</p>
+
+<p>&nbsp;</p>
+
+<p><i>The next pages explain how to change some or all of the hLog 
+default behaviour and values.</i>
+</div> <! class="ident">
+
+<p>&nbsp;</p>
+
+<table class="Footer" width="100%">
+  <tbody>
+    <tr>
+      <td class="AppTitle"><p>THotLog</p></td>
+      <td class="LnkTitle" align="right"><p><a class="sLink" href="Advisory_02.htm">&laquo; Previous</a> | <a class="sLink" href="Instance_04.htm">Next &raquo;</a></p></td>
+    </tr>
+  </tbody>
+</table>
+
+</body>
+</html>

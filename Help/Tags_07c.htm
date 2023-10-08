@@ -1,0 +1,360 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1">
+  <title>Formating strings</title>
+  <link rel="stylesheet" href="css/HLLayout.css">
+</head>
+
+<body link="#3366ff" vlink="#000099" alink="#000099">
+<table class="Header" width="100%">
+  <tbody>
+    <tr>
+      <td class="AppTitle"><p>THotLog</p></td>
+      <td class="LnkTitle" align="right"><p>[ <a class="sLink" href="https://sourceforge.net/projects/hotlog/">Home</a> ]</p></td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Heading">
+  <tbody>
+    <tr>
+      <td>Using tags to retrieve or format data</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="ident">
+
+<p>Tags come into consideration only when using one of the
+overloaded definitions of THotLog
+"parsing methodes" <a href="Logging_06.htm#addProc">hLog.Add(...)</a>.<br>
+<br>
+<font color="red">Tags are not case sensitive.</font></p>
+<p>Tags are <a href="Tags_07a.htm#Standalone">Standalone</a> or <b>inline</b> ones.</p>
+
+<a name="inlineFormat"><br></a>
+<table class="Heading">
+  <tbody>
+    <tr>
+      <td>2 - Inline tags: format strings</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><b>Inline</b> tags can be used for 
+<a href="Tags_07b.htm#inlineInformation">information retrieval</a> 
+or <b>string formating.</b></p>
+
+<p><a name="alignment"><br></a>
+<b>THotLog</b> provides some inline tags to format strings.<br>
+<br>This tags can be combined with any other inline tag(s).<br>
+<ol>
+  <li><a href="#at_tag">"AT" tags</a></li>
+  <li><a href="#padd_tag">"Pad" tags</a></li>
+  <li><a href="#and_tag">"And" tags</a></li>
+  <li><a href="#emptytag">Empty tags</a></li>
+  <li><a href="#crlf">CarriageReturn / lineFeed tag</a></li>
+  <li><a href="#brackets">Writing brackets</a></li>
+</ol>
+
+</p><a name="at_tag"><br></a>
+<b>String positionning and alignment</b></p>
+<div class="ident">
+<pre>
+<span class="const">{@nnn}</span>    <span class="comment">// Left alignment</span>
+<span class="const">{nnn@}</span>    <span class="comment">// Right alignment</span>
+<span class="const">{@nnn@}</span>   <span class="comment">// Center</span>
+</pre>
+
+<br>
+
+<p><u><b><span class="const">{@nnn}</span></b> - Left alignment</u><br>
+<br>
+Instructs HLParser that "<b>what follows</b>" up to the next
+tag or character has to be written at position 
+<font color="red">nnn</font> in that line. It provides an easy 
+way to put strings at a precise location.<br>
+<br>
+<font color="red">CARE:</font><br>
+<ul>
+  <li>The first character after the closing
+bracket of the "@" tag will become the <b>nnn-th</b>
+character of the line (<b>not nnn+1</b> one).</li>
+  <li>Don't put spaces between '@' and the 'nnn' value.</li>
+</ul>
+The "nnn" value must be positive. It is considered by the parser 
+to be an integer.<br>
+<br>
+Examples of use:
+<pre>
+HLog.Add(<span class="const">'{@10}Exiting functionXXX.'</span>);
+<span class="comment">// Will ouptput 9 spaces, then the string "Exiting functionXXX."</span>
+<span class="comment">// Thus writting the first letter("E") at position 10</span>
+
+HLog.Add(<span class="const">'{@10}Exiting functionXXX :{@35}{hms}'</span>);
+<span class="comment">// Will ouptput 9 spaces, the string "Exiting functionXXX:", 
+// some more spaces to reach the position 34 and
+// the parsed value of the {hms} tag</span>           
+<span class="comment">// {hms} parsed value will start at column 35</span>
+</pre>
+There is NO space between <span class="const">{@35}</span> and 
+<span class="const">{hms}</span>. HLog writes spaces as found in the
+HLog.<b>Add</b> parameters.<br>
+<b>Anything between tags is considered to be a
+string and is part of the parsed result.</b></p>
+
+<br>
+
+<p><u><b><span class="const">{nnn@}</span></b> - Right alignment</u><br>
+<br>
+Right alignment to a position will be obtained by reversing the position of
+the '<b>@</b>'character:<br>
+<br>
+HLog.Add(<span class="const">'{25@}Exiting functionXXX.'</span>);<br>
+-&gt; writes "Exiting functionXXX." at position (25 - length(<span class="const">'Exiting functionXXX.'</span>)).<br
+In other words, the last letter (in this example the final dot) will be written at position 25.</p>
+
+<br>
+
+<p><u><b><span class="const">{@nnn@}</span></b> - Center</u><br>
+<br>
+Centering is obtained by using two "<b>@</b>", one before and one after 
+the requested length.<br>
+<br>
+"What follows" the tag<b> is centered in a string of lenght will nnn</b>.
+It will start at the current position of this line. If an odd number 
+of spaces has to be added, the extra space will be added after the 
+string to center.<br>
+<br>
+The important point is that what has to be centerd isn't centered 
+between the end of the previous string, and the first non-blank character 
+of the next one, but <b>exclusively</b> related to the length
+you pass between the two "<b>@</b>", that is considered to be the 
+full length of that field.<br>
+<br>
+The examples illustrates that behaviour:
+<pre>
+hLog.Add(<span class="const">'{ruler+}'</span>);
+hLog.Add(<span class="const">'Left part{@25@}Middle string{}End of the line'</span>);
+</pre>
+results in
+<pre><samp>    5    10   15   20   25   30   35   40   45   50   55   60   65   70   75   80
+....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|
+Left part      Middle string      End of the line</samp></pre>
+But
+<pre>
+hLog.Add(<span class="const">'{ruler+}'</span>);
+hLog.Add(<span class="const">'Left part{@25@}Middle string{@50}End of the line'</span>);
+</pre>
+results in
+<pre><samp>    5    10   15   20   25   30   35   40   45   50   55   60   65   70   75   80
+....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|
+Left part      Middle string                     End of the line</samp></pre>
+<br>
+The difference between the two outputs is that the second one adds 
+spaces before the last part of the line, to write it at position 50, 
+using the <b>{@50}</b> tag. But these extra spaces <b>are not taken into 
+account</b> when centering.<br>
+You may also note the use of an <b>empty tag</b> "<b>{}</b>" in the 
+first example to signal the end of one part of the line and the start 
+of a new one. If the empty tag is omitted, HLogParser tries to center 
+the whole string "Middle string End of the line" in 25 characters and 
+writes with only one leading blank it as it is not possible to center 
+a 29 character string in a 25 character field.<br>
+For clarity: A leading space is allways added when two strings/tags 
+translations may override each other, for clarity.</p>
+
+</div> <! class="ident">
+
+<p><a name="padd_tag"><br></a>
+<u><b><span class="const">{*nnnX}</span> - Pad up to</b></u><br>
+<div class="ident">
+Instructs HLParser to pad the string with characters 'X' up to 
+position nnn.
+<pre>
+hLog.Add(<span class="const">'{ruler+}'</span>);
+HLog.Add(<span class="const">'Exiting function{*25.}: '</span> + <span class="const">'What you want'</span>);
+</pre>
+looks like
+<pre><samp>    5    10   15   20   25   30   35   40   45   50   55   60   65   70   75   80
+....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|
+Exiting function.........: What you want</samp></pre>
+<br>
+And basically, 
+<pre>HLog.Add(<span class="const">'{*20.}'</span>);    <span class="comment">// Will output 20 dots at the beginning of the line:</span>
+<samp>....................
+</samp></pre>
+<br>
+Some combinations of tags:
+<pre>
+hLog.Add(<span class="const">'{ruler+}'</span>);
+HLog.Add(<span class="const">'<b>{@5}</b>=> Entering function<b>{*35.}</b>: '</span> + SomeFunctionName + <span class="const">'{60@}({HMS}-{GTC})'</span);
+HLog.Add(<span class="const">'<b>{@5}</b>=> Exiting<b>{*35.}</b>: '</span + SomeFunctionName + '<span class="const"><b>{60@}</b>(<b>{GTC}</b>)'</span>);
+</pre>
+Result:
+<pre><samp>    5    10   15   20   25   30   35   40   45   50   55   60   65   70   75   80
+....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|
+    => Entering function...............: MyFunction        (19:21:35-5164171)
+    => Exiting.........................: MyFunction        (5173546)</samp></pre>
+<br>
+The character at postion <b>60</b> is the first openning (left) parenthesis. 
+Remember that tags action range is "up to the next tag or string". 
+In this case, the next tag is the <b>{HMS}</b> one, and then, the <b>{@60}</b> 
+visibility starts and stops with the preceding left parenthesis.<br>
+This can be changed: <a href="#and_tag">Enlarging the
+visibility range of @ tags</a>.<br>
+<br>
+It's not possible to step backwards and overwrite existing parts
+of a string. A tag is ignored if it tries to move the cursor to the left.<br>
+An extra space is added before the start of the new string, to preserve 
+the clarity of what is logged:
+<pre>
+hLog.Add(<span class="const">'{ruler+}'</span>);
+HLog.Add(<span class="const">'Exiting{*25.}: '</span> + SomeFunctionName + <span class="const">'{@30}({GTC})'</span>);
+</pre>
+results in
+<pre><samp>    5    10   15   20   25   30   35   40   45   50   55   60   65   70   75   80
+....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|
+Exiting..................: MyFunction (12554877)</samp></pre>
+instead of <pre><samp>Exiting function.........: MyF(12554877)</samp></pre></p>
+
+</div> <! class="ident"> 
+
+<p><a name="and_tag"><br></a>
+<u><b><span class="const">{&amp;}</span> - Enlarging the visibility range of @ tags</b></u><br>
+<div class="ident">
+Right alignment of blocks of string/tags need a special workaround as "@" 
+formatting tags works on what follows "up to next part" of the final 
+string (what follows a tag or a string). This is provided through 
+another tag: <b>{&amp;}</b>.<br>
+<b>{&amp;} tags works as pair.</b> They instruct hlParser to 
+consider <b>everything between two {&amp;} tags</b> as a 
+single string, before working on a @ tag.<br>
+Example:
+<pre>
+hLog.Add(<span class="const">'{ruler+}'</span>);
+HLog.Add(<span class="const">'{@5}-> Entering function{*25.}: '</span> + SomeFuncName + <span class="const">'{60@}<b>{&amp;}</b>({HMS}-{GTC})<b>{&amp;}</b>'</span>);
+HLog.Add(<span class="const">'{@5}-> Exiting{*25.}: '</span> + SomeFuncName + <span class="const">'{60@}<b>{&amp;}</b>({GTC})<b>{&amp;}</b>'</span>);
+</pre>
+In the last line above {&amp;} tags are needed again because otherwise
+only the openning parenthesis would be at position 60.<br>
+But we want the whole block of three  parts "<b>(</b>", <b>GTC value</b> and "<b>)</b>" 
+to be right aligned at position 60.<br>
+<br>
+Result now:
+<pre><samp>    5    10   15   20   25   30   35   40   45   50   55   60   65   70   75   80
+....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|
+    -> Entering function.....: MyFunction (19:31:09-5738500)
+    -> Exiting...............: MyFunction          (5758312)</samp></pre>
+<br>
+Grouping parts of strings with <b>{&amp;}</b> tags can be used 
+only with right or center tags (<b>{nn@}</b> and <b>{@nn@}</b>). 
+Using them with left alignment tags is ignored.<br>
+<br>
+Please note also that <b>{@}</b> tags embeded <b>BETWEEN</b> two paired
+<b>{&amp;}</b> tags are ignored too.</p>
+
+</div> <! clas="ident">
+
+<p><a name="emptytag"><br></a>
+<u><b><span class="const">{xyx}</span> - Empty tags</b></u><br>
+<div class="ident">
+In order to interpret <b>{@nnn}</b> tags correctly (ie. "whenever possible but 
+without overriding other values") the parser works in two passes:<br>
+-&gt; The first one converts all tags but <b>{@}</b> and <b>{&amp;}</b> ones.<br>
+-&gt; The second one works on positionning (after checking for <b>{&amp;}</b> blocks).<br>
+<br>
+So, chaining two positionning tags in the form <b>{@nnn}{*NNNx}</b>
+would give unwanted results:<br>
+During the first pass, the <b>{*NNNx}</b> would override the <b>{@nnn}</b>
+temporary stored value, to "complete" it with the specified character, up to
+the specified length.<br>
+An error will be written as the <b>{@nnn}</b> tag is no longer valid.<br>
+<br>
+A workaround to this is simply to add an empty tag <b{}</b> between
+the <b>{@nnn}</b> and the <b>{*NNNx}</b> tags.<br>
+<br>
+Examples:
+<pre>hLog.Add(<span class="const">'{ruler+}'</span>);
+hLog.Add(<span class="const">'{@10}{*5>}Strings to be written''</span>);  <span class="comment">// Writes an error:</span>
+<samp>
+    5    10   15   20   25   30   35   40   45   50   55   60   65   70   75   80
+....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|
+#HLTag(@10>>) Strings to be written</samp></pre>
+Workaround:
+<pre>HLog.Add(<span class="const">'{@10}{}{*5>}Strings to be written'</span>);
+<samp>         >>>>>Strings to be written</samp></pre><br>
+<b>Remark: The contrary is not true.</b>
+<pre>hLog.Add(<span class="const">'{ruler+}'</span>);
+HLog.Add(<span class="const">'{*5>}{@30}Strings to be written'</span>)    <span class="comment">// is ok</span>
+<samp>
+    5    10   15   20   25   30   35   40   45   50   55   60   65   70   75   80
+....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|
+&gt;&gt;&gt;&gt;&gt;                        Strings to be written</samp></pre>
+"String To be written" starts at the wanted byte position of 30</p>
+
+</div> <! class="ident">
+
+<p><a name="crlf"><br></a>
+<u><b><span class="const">{/}</span> - Inserting carriage return - line feeds</b></u><br>
+<div class="ident">
+The parser will add a carriage return / line feed pair each time it meets
+this tag.
+<pre>hLog.Add(<span class="const">'{ruler+}'</span>);procedure TForm1.Button8Click(Sender: TObject);
+var i: real;
+    s: String;
+begin
+  Randomize;
+  i := Random;
+  s := TimeToStr(now);
+  hLog.Add(<span class="const">'{ruler+}'</span>);
+  hLog.Add(vsNone,[<span class="const">'Here are some datas to output exactly like I want {/}'</span>,
+                   <span class="const">'{@15}This one is number{@40}: '</span>,<span class="const">1</span>, <span class="const">'{/}'</span>,<span class="const">'{@15}and this one is number{@40}: '</span>,<span class="const">2</span>,<span class="const">'{/}'</span>,
+                   <span class="const">'{@15}the third one is {@40}: '</span>,<span class="const">3</span>, <span class="const">'{/}'</span>,
+                   <span class="const">'{/}You can see the whole bunch mixes integers, real, and strings (including tags) whithout problems...'</span>,<span class="const">'{/}'</span>,
+                   <span class="const">'{/}By the way, "i" value is{@40}: '</span>, i, <span class="const">'{/}'</span>,
+                   <span class="const">'and the time part of "now()" function ('</span>,now,<span class="const">') translates to : '</span>,s ]);
+end;
+<samp>
+    5    10   15   20   25   30   35   40   45   50   55   60   65   70   75   80
+....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|
+Here are some datas to output exactly like I want 
+              This one is number       : 1
+              and this one is number   : 2
+              the third one is         : 3
+
+You can see the whole bunch mixes integers, real, and strings (including tags) whithout problems...
+
+By the way, "i" value is               : 0,990934341913089
+and the time part of "now()" function (38060,9705908102) translates to : 23:17:39</samp></pre>
+<b>{/}</b> tags can be either part of a string or can be used standalone with the same result.</p>
+
+</div> <! class="ident">
+
+<p><a name="brackets"><br></a>
+<u><b><span class="const">{{}</span> and <span class="const">{}}</span> - Writting brackets</b></u><br>
+<div class="ident">
+In order to write brackets as strings, simply enclose them between brackets.<br>
+<pre>hLog.Add(<span class="const">'The tag {{}hms{}} is now worth {hms}'</span>);
+<samp>
+The tag {hms} is now worth 21:12:42</samp></pre></p>
+
+</div> <! class="ident">
+
+<p>&nbsp;</p>
+
+<table class="Footer" width="100%">
+  <tbody>
+    <tr>
+      <td class="AppTitle"><p>THotLog</p></td>
+      <td class="LnkTitle" align="right"><p><a class="sLink" href="Tags_07b.htm">&laquo; Previous</a> | <a class="sLink" href="Monitoring_08.htm">Next &raquo;</a></p></td>
+    </tr>
+  </tbody>
+</table>
+
+</body>
+</html>

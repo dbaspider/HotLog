@@ -1,21 +1,15 @@
-MIT License
+	//  This unit is freeware, but under copyrights that remain mine for my
+    //  parts of the code, and original writters for their parts of the code.
+    //  This is mainly the case about "variant open array parameters"
+    //  copying routines, that come from Rudy Velthuis' pages on the web at :
+    //  http://rvelthuis.bei.t-online.de/index.htm
 
-Copyright (c) 2023 dbaspider
+    //  This unit can be freely used in any application, freeware, shareware
+    //  or commercial. However, I would apreciate your sending me an email if
+    //  you decide to use it. Of course, you use it under your own and single
+    //  responsability. Neither me, nor contributors, could be held responsible
+    //  for any problem resulting from the use of this unit.  ;-)
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+    //  It can also be freely distributed, provided this licence and the copyright
+    //  notice remains within it unchanged, and its help file is distributed
+    //  with it too.

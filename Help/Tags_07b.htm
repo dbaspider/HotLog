@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1">
+  <title>Inline tags</title>
+  <link rel="stylesheet" href="css/HLLayout.css">
+</head>
+
+<body alink="#000099" link="#3366ff" vlink="#000099">
+
+<table class="Header" width="100%">
+  <tbody>
+    <tr>
+      <td class="AppTitle"><p>THotLog</p></td>
+      <td class="LnkTitle" align="right"><p>[ <a class="sLink" href="https://sourceforge.net/projects/hotlog/">Home</a> ]</p></td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Heading">
+  <tbody>
+    <tr>
+      <td>Using tags to retrieve or format data</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="ident">
+
+<p>Tags come into consideration only when using one of the
+overloaded definitions of THotLog
+"parsing methodes" <a href="Logging_06.htm#addProc">hLog.Add(...)</a>.<br>
+<br>
+<font color="red">Tags are not case sensitive.</font></p>
+<p>Tags are <a href="Tags_07a.htm#Standalone">Standalone</a> or <b>inline</b> ones.</p>
+
+<a name="inlineInformation"><br></a>
+<table class="Heading">
+  <tbody>
+    <tr>
+      <td>2 - Inline tags: information retrieval</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><b>Inline</b> tags can be used for <b>information retrieval</b> or 
+<a href="Tags_07c.htm#inlineFormat">string formating</a>.</p>
+
+<p><a name="memoryinline"><br></a>
+<b>Disk</b>, <b>RAM</b> and <b>Heap</b> can be logged with <a href="Tags_07a.htm#standalone">standalone
+tags</a> or <b>inline</b> ones.<br>
+<br>
+Each of them has three different <b>inline tags</b>, allowing to output more
+or less formatted values.</p>
+<pre>
+  Tag              Output
+--------------------------------------------------------
+For <b>Delphi</b>
+<span class="const">'{Heap-}'</span>       <span class="comment">//</span> <samp>[Heap monitor]: Small Blocks=848, Size=28 MB, Reserved=1 MB, Medium Blocks=0, Size=0 MB, Reserved=0 MB, Large Blocks=0, Size=0 MB, Reserved=0 MB</samp>
+<span class="const">'{Heap--}'</span>      <span class="comment">//</span> <samp>[Heap monitor]: (Small Blocks: 848, 28 MB, 1 MB, Medium Blocks: 0, 0, 0, Large Blocks: 0, 0, 0)</samp>
+<span class="const">'{Heap---}'</span>     <span class="comment">//</span> <samp>((848, 28 MB, 1 MB), (0, 0 MB, 0 MB), (0, 0 MB, 0 MB))</samp>
+
+and for <b>Lazarus</b>
+<span class="const">'{Heap-}'</span>       <span class="comment">//</span> <samp>[Heap monitor]: Maximum heap size=229.376, Maximum used heap size=2.688, Current heap size=229.376, Currently used heap size=2.688, Currently free on heap=226.688</samp>
+<span class="const">'{Heap--}'</span>      <span class="comment">//</span> <samp>[Heap monitor]: (229.376, 3.392, 229.376, 3.392, 225.984)</samp>
+<span class="const">'{Heap---}'</span>     <span class="comment">//</span> <samp>(229.376, 4.032, 229.376, 4.032, 225.344)</samp>
+
+
+<span class="const">'{RAM-}'</span>        <span class="comment">//</span> <samp>[RAM  monitor]: Total Physical=8.102 MB, Available=3.051 MB, Total Page File=16.201 MB, Available=10.135 MB, Total Virtual=8.388.608 MB, Available=8.388.509 MB, Load=62%</samp>
+<span class="const">'{RAM--}'</span>       <span class="comment">//</span> <samp>[RAM  monitor]: (Physical: 8.102 MB, 3.051 MB, Page File: 16.201 MB, 10.135 MB, Virtual: 8.388.608 MB, 8.388.509 MB, 62%)</samp>
+<span class="const">'{RAM---}'</span>      <span class="comment">//</span> <samp>((8.102 MB, 3.051 MB), (16.201 MB, 10.135 MB), (8.388.608 MB, 8.388.509 MB), 62%)</samp>
+
+<span class="const">'{disk-}'</span>       <span class="comment">//</span> <samp>[Disk monitor]: B: (Free-User=98.744 MB, Total-User=99.332 MB, Free-Disk=98.744 MB), C: (Free-User=159.643 MB, Total-User=238.373 MB, Free-Disk=159.643 MB), D: (Free-User=578.343 MB, Total-User=1.483.855 MB, Free-Disk=578.343 MB), E: (Free-User=42.866 MB, Total-User=99.904 MB, Free-Disk=42.866 MB), G: (Free-User=223.136 MB, Total-User=323.869 MB, Free-Disk=223.136 MB), O: (Free-User=65 MB, Total-User=100 MB, Free-Disk=65 MB), P: (Free-User=58 MB, Total-User=94 MB, Free-Disk=58 MB)</samp>
+<span class="const">'{disk--}'</span>      <span class="comment">//</span> <samp>[Disk monitor]: B: (98.744 MB, 99.332 MB, 98.744 MB), C: (159.643 MB, 238.373 MB, 159.643 MB), D: (578.343 MB, 1.483.855 MB, 578.343 MB), E: (42.866 MB, 99.904 MB, 42.866 MB), G: (223.136 MB, 323.869 MB, 223.136 MB), O: (65 MB, 100 MB, 65 MB), P: (58 MB, 94 MB, 58 MB)</samp>
+<span class="const">'{disk---}'</span>     <span class="comment">//</span> <samp>((B: 98.744 MB, 99.332 MB, 98.744 MB), (C: 159.644 MB, 238.373 MB, 159.644 MB), (D: 578.343 MB, 1.483.855 MB, 578.343 MB), (E: 42.866 MB, 99.904 MB, 42.866 MB), (G: 223.136 MB, 323.869 MB, 223.136 MB), (O: 65 MB, 100 MB, 65 MB), (P: 58 MB, 94 MB, 58 MB))</samp>
+</pre>
+
+<a href="Monitoring_08.htm">See also "Monitoring RAM and Heap"</a>.</p>
+
+<p><a name="application"><br></a>
+<b>Application object information</b><br>
+<br>
+Some of your programm characteristics can be logged with
+<pre>
+  Tag              Output
+--------------------------------------------------------
+<span class="const">'{app_name}'</span>    <span class="comment">// The name of the programm</span>
+<span class="const">'{app_path}'</span>    <span class="comment">// The path of the programm</span>
+<span class="const">'{app_lfn}'</span>     <span class="comment">// Both path and name of the programm</span>
+<span class="const">'{app_ver}'</span>     <span class="comment">// Programm version : Major, minor revision and build, splitted by dots.</span>
+<span class="const">'{app_prm-}'</span>    <span class="comment">// The list of the parameters recieved, outputed on a single line</span>
+</pre></p>
+
+<p><a name="datetime"><br></a>
+<b>Date and time</b><br>
+<br>
+Date and time tags are
+<pre>
+  Tag              Output
+--------------------------------------------------------
+<span class="const">'{dte}'</span>         <span class="comment">// The current date, iso (yyyy-mm-dd)</span>
+<span class="const">'{hms}'</span>         <span class="comment">// The current time, iso (hh:mm:ss)</span>
+<span class="const">'{now}'</span>         <span class="comment">// Both date and time, space separator (yyyy-mm-dd hh:mm:ss)</span>
+<span class="const">'{gtc}'</span>         <span class="comment">// GetTickCount value</span>
+<span class="const">'{dhg}'</span>         <span class="comment">// Date time and GTC.</span>
+</pre>
+<br>
+See THotLog <a href="Logging_06.htm#AddStringList">"header" and "footer"</a>
+variables for an illustration of a possible use for application tags,
+and date-time ones.</p>
+
+<p><a name="LNumbers"><br></a>
+<b>Temporary displaying or ooverriding line numbers</b><br>
+<br>
+THotLog maintains a count of outputed lines. Line numbers can be added 
+by using <a href="HLStp_05b.htm#modifylineNum"><b>ModifyLineNumbering( )</b></a>.<br>
+<br>
+The global setting can also be temporary changed using tags
+<pre>
+<span class="const">'{lNum}'</span>     <span class="comment">// Will output the current line number in the string parsed, at the place occupied by the tag</span>
+<span class="const">'{lNumOff}'</span>  <span class="comment">// No line numbers. lNumOff tag impacts the string or stringlist actually parsed</span> 
+<pre></p>
+
+</div> <! class="ident">
+
+<table class="Footer" width="100%">
+  <tbody>
+    <tr>
+      <td class="AppTitle"><p>THotLog</p></td>
+      <td class="LnkTitle" align="right"><p><a class="sLink" href="Tags_07a.htm">&laquo; Previous</a> | <a class="sLink" href="Tags_07c.htm">Next &raquo;</a></p></td>
+    </tr>
+  </tbody>
+</table>
+
+</body>
+</html>

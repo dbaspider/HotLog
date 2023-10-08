@@ -1,0 +1,245 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Monitoring RAM and Heap</title>
+  <link rel="stylesheet" href="css/HLLayout.css">
+</head>
+<body alink="#000099" link="#3366ff" vlink="#000099">
+<table class="Header" width="100%">
+  <tbody>
+    <tr>
+      <td class="AppTitle"><p>THotLog</p></td>
+      <td class="LnkTitle" align="right"><p>[ <a class="sLink" href="https://sourceforge.net/projects/hotlog/">Home</a> ]</p></td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Heading">
+  <tbody>
+    <tr>
+      <td>Monitoring RAM and heap</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="ident">
+
+<p>Heap, RAM and disk status of your user's computer can be logged using
+<a href="Tags_07b.htm#inline">inline</a> or 
+<a href="Tags_07a.htm#standalone">standalone</a> tags.<br>
+<br>
+In order to survey the memory evolution between parts of the code,
+THotLog provides another way of monitoring the first two (<b>Heap</b> and <b>RAM</b>), 
+which values may change often, with four additionnal functions:</p>
+
+<p>&nbsp;</p>
+
+<p>Function <b>HeapMonitor(hmExtra: String=''; directOutput: Boolean=False) : THeapMRec;</b><br>
+<div class="ident">
+<b>hmExtra</b> is a user defined string that may be added to the end of
+the (first) line of outputed values. As long as standalone tags are
+parsed in one "pass" only, hmExtra cannot be an inline tag, but only a string.<br>
+If <b>directOutput</b> is set, values won't be stored. The HeapTable will 
+stay unchanged.
+</div> <! class="ident">
+</p>
+
+<br>
+
+<p>Procedure <b>ResetHeapTable;</b><br>
+<div class="ident">
+Empties the heap monitoring table
+</div> <! class="ident">
+</p>
+
+<br>
+
+<p>As long as they do work in a close maner, only heap monitoring will be
+detailed here.</p>
+
+<p>hLog.HeapMonitor( ) will read heap values and request the parser
+thread to store them in a FIFO table. They'll be outputed when you'll
+pass heap outputing tags to the <a href="Logging_06.htm#addproc">hLog.Add(
+);</a> function.</p>
+
+</p>This table has 4 entires : three to store measures, and one to store an
+additional string that can be kept empty, a kind of free comment. If
+provided, It will be added at the end of the first line, when the
+standalone tag is used, after the values when inline tags are used.</p>
+
+<p>Both <b>HeapMonitor( );</b>&nbsp; and <b>RamMonitor( );</b> return a
+<b>THeapMRec</b> record with the values just read:
+<a name="THeapMRec"></a>
+<div class="ident">
+<pre>THeapMRec = <b>record</b>
+  Extra: string;
+  case integer of
+    // Heap
+    {$IFDEF FPC}         <span class="comment">// <b>Lazarus</b></span>
+    0: (MaxHeapSize:                     PtrUInt;  <span class="comment">// Maximium allowed size for the heap, in bytes</span>
+        MaxHeapUsed:                     PtrUInt;  <span class="comment">// Maximum used size for the heap, in bytes</span>
+        CurrHeapSize:                    PtrUInt;  <span class="comment">// Current heap size, in bytes</span>
+        CurrHeapUsed:                    PtrUInt;  <span class="comment">// Currently used heap size, in bytes</span>
+        CurrHeapFree:                    PtrUInt); <span class="comment">// Currently free memory on heap, in bytes</span>
+    {$ELSE}              <span class="comment">// <b>Delphi</b></span>
+    0: (AllocatedSmallBlockCount:        cardinal;
+        TotalAllocatedSmallBlockSize:    NativeUInt;
+        ReservedSmallBlockAddressSpace:  NativeUInt;
+        AllocatedMediumBlockCount:       cardinal;
+        TotalAllocatedMediumBlockSize:   NativeUInt;
+        ReservedMediumBlockAddressSpace: NativeUInt;
+        AllocatedLargeBlockCount:        cardinal;
+        TotalAllocatedLargeBlockSize:    NativeUInt;
+        ReservedLargeBlockAddressSpace:  NativeUInt);
+    {$ENDIF}
+    // Ram
+    1: (MemoryLoad:                      cardinal;
+        TotalPhysical:                   UInt64;
+        AvailPhysical:                   UInt64;
+        TotalPageFile:                   UInt64;
+        AvailPageFile:                   UInt64;
+        TotalVirtual:                    UInt64;
+        AvailVirtual:                    UInt64);
+  end;</pre></div></p>
+
+<p>Returned (and stored) values depend on the function called.<br>
+The return code of the function is stored into hExtra, under the form
+of a '0' if the function failed, a '1' otherwise. This means that you
+can check the result using function StrToBool(yourVariable.hExtra).</p>
+
+<p>&nbsp;</p>
+
+<p><b>xxxMonitor( );</b> returns a THeapMRec (RAM or heap datalayout):</p>
+<table style="width: 60%;" border="1" cellpadding="2" cellspacing="1">
+  <tbody>
+    <tr>
+      <td style="text-align: center;">&nbsp;</td>
+      <td style="text-align: center;"><b>HeapMonitor( );&nbsp; (Delphi)</b></td>
+      <td style="text-align: center;"><b>HeapMonitor( );&nbsp; (Lazarus)</b></td>
+      <td style="text-align: center;"><b>RamMonitor( );</b></td>
+    </tr>
+    <tr>
+      <td>Number</td>
+      <td>AllocatedSmallBlockCount</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td>Bytes</td>
+      <td>TotalAllocatedSmallBlockSize</td>
+      <td>MaxHeapSize</td>
+      <td>TotalPhysical</td>
+    </tr>
+    <tr>
+      <td>Bytes</td>
+      <td>ReservedSmallBlockAddressSpace</td>
+      <td>MaxHeapUsed</td>
+      <td>AvailPhysical</td>
+    </tr>
+    <tr>
+      <td>Number</td>
+      <td>AllocatedMediumBlockCount</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td>Bytes</td>
+      <td>TotalAllocatedMediumBlockSize</td>
+      <td>CurrHeapSize</td>
+      <td>TotalPageFile</td>
+    </tr>
+    <tr>
+      <td>Bytes</td>
+      <td>ReservedMediumBlockAddressSpace</td>
+      <td>CurrHeapUsed</td>
+      <td>AvailPageFile</td>
+    </tr>
+    <tr>
+      <td>Number</td>
+      <td>AllocatedLargeBlockCount</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td>Bytes</td>
+      <td>TotalAllocatedLargeBlockSize</td>
+      <td>CurrHeapFree</td>
+      <td>TotalVirtual</td>
+    </tr>
+    <tr>
+      <td>Bytes</td>
+      <td>ReservedLargeBlockAddressSpace</td>
+      <td>&nbsp;</td>
+      <td>AvailVirtual</td>
+    </tr>
+    <tr>
+      <td>%</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>MemoryLoad</td>
+    </tr>
+    <tr>
+      <td>Extra</td>
+      <td> '1'-> True or '0'-> False</td>
+      <td>&nbsp;</td>
+      <td> '1'-> True or '0'-> False</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>HotLog Heap monitoring table works in <b>FIFO</b></span> mode.</p>
+
+<p>Values (blocks, bytes and the optional string) are stored and retrieved
+alltogether, "line by line".<br>
+A request to output an entry (through the appropriate tag) will
+retrieve the oldest entry of the table (entry[0]). If none exist, a
+direct read is made at that time, returning values less accurate than
+if they had been stored earlier. When an entry is read, it is removed
+from the table too.</p>
+
+<p>An example of use, in pseudo-code could be:<br>
+<div class="ident">
+<pre>
+<span class="comment">// Filling the table:</span>
+Begin
+  hLog.<b>ResetHeapTable</b>;         <span class="comment">//makes sure the table is empty, before storing new values;</span>
+  hLog.<b>HeapMonitor</b>;            <span class="comment">// hm[0]</span>
+  PrepareWork;
+  hLog.<b>HeapMonitor</b>;            <span class="comment">// hm[1]</span>
+  DoWork;
+  hLog.<b>HeapMonitor</b>;            <span class="comment">// hm[2]</span>
+  FreeEvthg;
+  hLog.<b>HeapMonitor</b>;            <span class="comment">// hm[3]</span>
+End;
+
+<span class="comment">// Then read and clear the table:</span>
+hLog.<a href="Logging_06.htm#addProc">Add</a>('State of the heap before starting job:      {50@}{<a href="Tags_07b.htm#memoryinline">Heap--</a>}');
+hLog.<a href="Logging_06.htm#addProc">Add</a>('State of the heap after PrepareWork:        {50@}{<a href="Tags_07b.htm#memoryinline">Heap--</a>}');
+hLog.<a href="Logging_06.htm#addProc">Add</a>('State of the heap after DoWork:             {50@}{<a href="Tags_07b.htm#memoryinline">Heap--</a>}');
+hLog.<a href="Logging_06.htm#addProc">Add</a>('State of the heap after freeing everything: {50@}{<a href="Tags_07b.htm#memoryinline">Heap--</a>}');
+</pre>
+</div> <! class="ident">
+<br>
+<br>
+These lines show that there is no direct acces to the entries stored.<br>
+<br>
+hLog doesn't provide any methode to compute heap deltas. But you can
+store and use the values returned by the HeapMonitor function to do it.
+</p>
+
+<p>&nbsp;</p>
+
+<table class="Footer" width="100%">
+  <tbody>
+    <tr>
+      <td class="AppTitle"><p>THotLog</p></td>
+      <td class="LnkTitle" align="right"><p><a class="sLink" href="Tags_07c.htm">&laquo;  Previous</a> | <a class="sLink" href="Timing_09.htm">Next &raquo;</a></p></td>
+    </tr>
+  </tbody>
+</table>
+
+</body>
+</html>

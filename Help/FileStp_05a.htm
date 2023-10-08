@@ -1,0 +1,260 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1">
+  <title>LogFile properties</title>
+  <link rel="stylesheet" href="css/HLLayout.css">
+</head>
+<body alink="#000099" link="#3366ff" vlink="#000099">
+
+<table class="Header" width="100%">
+  <tbody>
+    <tr>
+      <td class="AppTitle"><p>THotLog</p></td>
+      <td class="LnkTitle" align="right"><p>[ <a class="sLink" href="https://sourceforge.net/projects/hotlog/">Home</a> ]</p></td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Heading">
+  <tbody>
+    <tr>
+      <td>Log file properties</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="ident">
+
+<p><b>hLog</b> writes everything in a file which is
+owned and managed by the writer thread. For that reason, the log file
+definition object has been made a property of the wrtiter thread,
+instead of declaring more anf more methodes into THotLog itself.</p>
+
+<p>You will then have to acces it through the writer thread instance: <b>hLog.hlWriter.hlFileDef.<i>someProperty</i></b>.</p>
+
+<p>Please note also that it is obvious that those settings can be
+changed <b>before you call </b>
+<a href="Instance_04.htm#startLogging">hLog.StartLogging</a> or a hLog.Add procedure for the first time.<br>
+It's not possible to change some log file and writer thread properties later.</p>
+
+<p><a name="ddname"><br></a>
+<b>.ddname: String;</b><br>
+<div class="ident">
+The part of the filename after the path and before the extention.<br>
+<b>Default: Your program's name.</b>
+</div>
+</p>
+
+<p><a name="path"><br></a>
+<b>.path: String;</b><br>
+<div class="ident">
+The path of the logFile.<br>
+<b>Default: Your programm's path.</b>
+</div>
+</p>
+
+<p><a name="ext"><br></a>
+<b>.ext: String;</b><br>
+<div class="ident">
+The extention.<br>
+If an extention is provided, generations are no longer managed.</span><br>
+<b>Default: .log</b>
+</div>
+</p>
+
+<p><a name="fileName"><br></a>
+<b>.fileName: TFileName;</b><br>
+<div class="ident">
+The long file name: path + name + extention
+</div>
+</p>
+
+<p><a name="append"><br></a>
+<b>.append: Boolean;</b><br>
+<div class="ident">
+If true and a previous file exists, new data will be appended, gdgMax is set to 0 and 
+generations are no longer managed.<br>
+<b>Default: False</b>
+</div>
+</p>
+
+<p><a name="GdgMax"><br></a>
+<b>.GdgMax: Word;</b><br>
+<div class="ident">
+The number of generations files to keep. Can range from 0 to 999.<br>
+If set to 0 (and .append is False), a new log file is created each time your application starts.<br>
+If set to one, a new file is created too, with the extention ".001".<br>
+If more than one, HotLog will create a new file each time your application starts, until the max number of generations is reached.<br> 
+When reached, the oldest one will be deleted, all the others will be renamed, and the new one. The oldest one has the extention ".001",
+the most recent one is the one with the highest extention number.<br>
+<b>Default: False</b>
+</div>
+</p>
+
+<p><a name="OpMode"><br></a>
+<b>.OpMode: Word;</b><br>
+<div class="ident">
+Read only property.<br>
+The open mode for the log file. Depends of preceding topics. Used internally.
+</div>
+</p>
+
+<p><a name="LogFileMaxSize"><br></a>
+<b>.LogFileMaxSize: Integer;</b><br>
+<div class="ident">
+Maximum size of the log file, used for continuous operation.<br> 
+HotLog instances can monitor the size of the log file and close it and open a new one when a certain limit is reached (feature added by Rob Becker).<br>
+You can use whatever you want. Robert defined constants for this, which name are explicit enough:
+<pre>
+  <span class="const">OneKilobyte</span> = <span class="const">1024</span>;
+  <span class="const">OneMegabyte</span> = <span class="const">OneKilobyte</span> * <span class="const">1024</span>;
+  <span class="const">TenMegabyte</span> = <span class="const">OneMegabyte</span> * <span class="const">10</span>;
+</pre>
+<b>Default: 0 (unlimited)</b><br>
+Remenber that these values are approximative limits because a HotLog message will not be interrupted. 
+</div>
+</p>
+
+<p><a name="UseSafeFileNames"><br></a>
+<b>.UseSafeFilenames: Boolean;</b><br>
+<div class="ident">
+Generate a unique name for each log file.<br> 
+"Safe" filenames are names that we can beleive to be "unique". The filename is build with the current date, time and an internal index: yyyy-mm-dd hh.mm.ss index<br>
+Use .ddname to define a common prefix for all safe names. In this case the the filename is ddname-yyyymmdd-hhmmss-index<br>
+<b>Default: False</b>
+</div>
+</p>
+
+<p><a name="SafeGdgMax"><br></a>
+<b>.SafeGdgMax: Word;</b><br>
+<div class="ident">
+You should use this if you set a maximum to the number of safe log files generations.<br> 
+Once the maximum will be reached, hLog will try to delete the older ones. To be used instead of <b>gdgMax</b> if you use safe file names.<br>
+<b>Default: 0</b>
+</div>
+</p>
+
+<p>&nbsp;</p>
+
+<div class="ident">
+<p><u>Examples of use (with an exe being for example "C:\tools\MyProg.exe"):</u></p>
+
+<p>=&gt; <b>Changing nothing:</b><br><br>
+The log file full name will be "C:\tools\MyProg.log"<br>
+Only one file. Will be overwritten at every startup.</p>
+
+<p>&nbsp;</p>
+
+<p>=&gt; <b>Setting the ddName:</b>
+<ul>
+  <li><pre>hLog.hlWriter.hlFileDef.<b>ddname</b> := <span class="const">'AnotherLogName'</span>;</pre></li>
+</ul>
+The log file full name will be "C:\tools\AnotherLogName.log"<br>
+Only one file. Will be overwritten at every startup.</p>
+
+<p>&nbsp;</p>
+
+<p>=&gt; <b>Defining a generation based file, limited to five generations:</b>
+<ul>
+  <li><pre>hLog.hlWriter.hlFileDef.<b>GdgMax</b> := <span class="const">5</span>;</pre></li>
+</ul>
+Will create and maintain up to five log generations:<br>
+"C:\tools\MyProg.001" to "C:\tools\MyProg.005"<br>
+HotLog will open a new generation log file at every startup.</p>
+
+<p>&nbsp;</p>
+
+<p>=&gt; <b>Defining a size limit for the log file, and a maximum of five generations:</b>
+<ul>
+  <li><pre>hLog.hlWriter.hlFileDef.<b>GdgMax</b> := <span class="const">5</span>;</pre></li>
+  <li><pre>hLog.hlWriter.hlFileDef.<b>LogFileMaxSize</b> := <span class="const">OneKilobyte</span>;</pre></li>
+</ul>
+Will create and maintain up to five log generations:<br>
+"C:\tools\MyProg.001" to "C:\tools\MyProg.005"<br>
+HotLog will open a new generation log file at every startup and whenever a file reached 1k.</p>
+
+<a name="sampleapplication"><br></a>
+<p><pre>unit Unit1;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants,
+  Classes, Graphics, Controls, Forms,
+  Dialogs, ExtCtrls, StdCtrls, ComCtrls,
+  HotLog;
+
+type
+  TForm1 = class(TForm)
+    Timer1: TTimer;
+    Memo1: TMemo;
+    procedure Timer1Timer (Sender: TObject);
+    procedure FormCreate  (Sender: TObject):
+    procedure FormDestroy (Sender: TObject);
+    private
+      <span class="comment">{ Private declarations }</span>
+    public
+      <span class="comment">{ Public declarations }</span>
+  end;
+
+implementation
+{$R *.dfm}
+
+const SeventyCharsOfJunk = <span class="const">'1234567890123456789012345678901234567890123456789012345678901234567890'</span>;
+
+var Counter: integer;
+
+procedure TForm1.Timer1Timer(Sender: TObject);
+begin
+  hLog.AddStr('Counter = ' + IntToStr(Counter) + ' ' + DateTimeToStr(Now) + SeventyCharsOfJunk);
+  inc(counter);
+end;
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+  Counter := <span class="const">1</span>;
+  hLog.hlWriter.hlFileDef.path := ExtractFilePath(Application.ExeName);
+  hLog.hlWriter.hlFileDef.UseFileSizeLimit := <span class="const">true</span>;
+  hLog.hlWriter.hlFileDef.LogFileMaxSize := <span class="const">OneKilobyte</span>;
+  hLog.hlWriter.hlFileDef.UseSafeFilenames := <span class="const">true</span>;
+  if hLog.hlWriter.hlFileDef.UseSafeFilenames then
+  begin
+    hLog.hlWriter.hlFileDef.BuildSafeFilename;
+    hLog.hlWriter.hlFileDef.SafeGdgMax := <span class="const">5</span>;
+  end else
+  begin
+    hLog.hlWriter.hlFileDef.ddname := <span class="const">'LogTest'</span>;
+    hLog.hlWriter.hlFileDef.GdgMax := <span class="const">5</span>;
+  end;
+  hlog.SetLogFileTimerInterval(<span class="const">OneMinute</span>);
+  hLog.DisplayFeedBackInto(Memo1);
+  hLog.ScrollMemo(<span class="const">true</span>);
+  hLog.SetMemoLimit(<span class="const">5000</span>);
+  hlog.StartLogging;
+end;
+
+procedure TForm1.FormDestroy(Sender: TObject);
+begin
+  hlog.StopVisualFeedBack;
+end;
+</pre></p>
+
+</div> <!<class="ident">
+
+<p>&nbsp;</p>
+
+<table class="Footer" width="100%">
+  <tbody>
+    <tr>
+      <td class="AppTitle"><p>THotLog</p></td>
+      <td class="LnkTitle" align="right"><p><a class="sLink" href="Instance_04.htm">&laquo; Previous</a> | <a class="sLink" href="HLStp_05b.htm">Next &raquo;</a></p></td>
+    </tr>
+  </tbody>
+</table>
+
+</body>
+</html>

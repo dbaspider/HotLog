@@ -1,0 +1,282 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1">
+  <title>Standalone tags</title>
+  <link rel="stylesheet" href="css/HLLayout.css">
+</head>
+<body alink="#000099" link="#3366ff" vlink="#000099">
+
+<table class="Header" width="100%">
+  <tbody>
+    <tr>
+      <td class="AppTitle"><p>THotLog</p></td>
+      <td class="LnkTitle" align="right"><p>[ <a class="sLink" href="https://sourceforge.net/projects/hotlog/">Home</a> ]</p></td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Heading">
+  <tbody>
+    <tr>
+      <td>Using tags to retrieve or format data</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="ident"><br>
+
+<p>Tags are the mean provided by THotLog to either retrieve informations, 
+or format the strings sent to the log file.<br>
+<br>
+Tags are made of strings beginnig and ending by brakets, like for example 
+<span class="const">'{OSVI}'</span>.<br>
+There are two tags famillies: <b>Standalone</b> ones, and <b>inLine</b> ones. 
+The last group has two sub-groups: <b>data retrieval</b> and 
+<b>formating tags</b>.<br>
+<br>
+Standalone ones can't be combined with other tags or strings. If a standalone 
+tag is read in the first position in a string sent to the parser, 
+anything that follows will be removed.<br>
+<br>
+Inline one can be combined with each other or with any other strings, 
+but can't be combined with standalone tags. If an inline tag or a string 
+(including a single character) is read at the begining of a line, any 
+standalone tag that met next will be discarded.<br>
+<br>
+Anything that is not a tag is considered to be a string during parsing.
+This includes single spaces that could separate two tags.<br>
+<br>
+<br>
+Tags come into consideration only when using one of the overloaded definitions 
+of THotLog "parsing methode":&nbsp; <a href="Logging_06.htm#addProc">hLog.Add( );</a>.<br>
+<br>
+<font color="red">Tags are case insensitive.</font></p>
+
+<a name="standalone"><br></a>
+<table class="Heading">
+  <tbody>
+    <tr>
+      <td>1- Standalone tags</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Some of this standalone them have an inline version too, and/or a monitoring one.
+(Inline or monitoring tag values are much more basic than the
+standalone tag ones.)</p>
+
+<p><a name="app_prm"><br></a>
+<pre>hLog.add(<span class="const">'{APP_PRM}'</span>)              <span class="comment">// Retrieves the parameters received</span>
+<samp>
+==================================  Parameter ====================================
+'one'
+'two and three'
+'four'
+==================================================================================
+</samp></pre></p>
+
+<p><a name="osvi"><br></a>
+<pre>hLog.add(<span class="const">'{OSVI}'</span>);                <span class="comment">// Retrieves OS version info</span>
+<samp>
+===============================  OS version info  =================================
+  Windows 7 x64 Version 6.1 Service Pack 1 Build 7601
+
+  Version      : 6.1
+  Build        : 7601
+  Servicepack  : 1.0
+  Architecture : x64
+===================================================================================
+</samp></pre></p>
+
+
+<p><a name="cpui"><br></a>
+<pre>hLog.add(<span class="const">'{CPUI}'</span>);                <span class="comment">// Retrieves CPU info</span>
+<samp>
+==================================  CPU info  =====================================
+  Architecture                : 9 (PROCESSOR_ARCHITECTURE_AMD64)
+  OEM ID (vendor)             : 9 (GenuineIntel)
+  Active processor mask       : 15
+  Number of processors        : 4
+  Processor type              : 586 (Intel Pentium)
+  Processor level             : 6
+  Speed (registry)            : 3192 MHz
+  VMem allocation granularity : 64 KB
+  ProcessorRevision           : 15363
+  Page size                   : 4 KB
+  Minimum application address : 0000000000010000
+  Maximum application address : 000007FFFFFEFFFF
+===================================================================================
+</samp></pre></p>
+
+<p><a name="mem"><br></a>
+<pre>hLog.add(<span class="const">'{Mem}'</span>);                 <span class="comment">// Retrieves memory information</span>
+<samp>
+=================================  Memory status  =================================
+  Memory (Total)            :        8.102 MB
+  Memory (Available)        :        2.742 MB  =&gt; Memory load : 66%
+
+  Page(Swap)File (Total)     :       16.201 MB
+  Page(Swap)File (Available) :        9.882 MB
+  Virtual Memory (Total)     :    8.388.608 MB
+  Virtual Memory (Available) :    8.388.514 MB
+
+  Current Disk (Total)       :    1.483.855 MB
+  Current disk (Available)   :      578.345 MB  =&gt; Free space  : 38,98%
+===================================================================================
+</samp></pre></p>
+
+<p><a name="disk"><br></a>
+<pre>hLog.add(</span><span class="const">'{Disk}'</span>);                <span class="comment">// Retrieves disk informations for all disks</span>
+<samp>
+============  Disk Monitor  ===========
+  Volume: B:  Backup-HTS723232A7A364
+  Free for User  :       98.744 MB
+  Total for User :       99.332 MB
+  Free on Disk   :       98.744 MB
+Volume: C:  Windows7-MX200
+  Free for User  :      159.653 MB
+  Total for User :      238.373 MB
+  Free on Disk   :      159.653 MB
+Volume: D:  Daten-HDS723020BLA642
+  Free for User  :      578.345 MB
+  Total for User :    1.483.855 MB
+  Free on Disk   :      578.345 MB
+Volume: E:  Windows10-HDS723020BLA642
+  Free for User  :       42.866 MB
+  Total for User :       99.904 MB
+  Free on Disk   :       42.866 MB
+Volume: O:  Boot-MX200
+  Free for User  :           65 MB
+  Total for User :          100 MB
+  Free on Disk   :           65 MB
+Volume: P:  Boot-HDS723020BLA642
+  Free for User  :           58 MB
+  Total for User :           94 MB
+  Free on Disk   :           58 MB
+=======================================
+</samp></pre></p>
+
+<p><a name="ram"><br></a>
+<pre>hLog.add(<span class="const">'{Ram}'</span>);                 <span class="comment">// Retrieves RAM informations  ("44%" below is the memory load.)</span>
+<samp>
+============  RAM Monitor  ============
+  Total Physical      : 8.102 MB
+  Available Physical  : 2.742 MB
+  Total Page File     : 16.201 MB
+  Available Page File : 9.880 MB
+  Total Virtual       : 8.388.608 MB
+  Availabe Virtual    : 8.388.509 MB
+================(44%)==================
+</samp></pre></p>
+
+<p><a name="heap"><br></a>
+<pre>hLog.add(<span class="const">'{Heap}'</span>);                <span class="comment">// Retrieves heap informations</span></font></pre>
+For Delphi:<pre><samp>===========  Heap Monitor  ============
+  Small Blocks:
+   AllocatedBlockCount       : 834
+   TotalAllocatedBlockSize   : 28 MB
+   ReservedBlockAddressSpace : 1 MB
+
+  Medium Blocks:
+   AllocatedBlockCount       : 0
+   TotalAllocatedBlockSize   : 0 MB
+   ReservedBlockAddressSpace : 0 MB
+
+  Large Blocks:
+   AllocatedBlockCount       : 0
+   TotalAllocatedBlockSize   : 0 MB
+   ReservedBlockAddressSpace : 0 MB
+=======================================
+</samp></pre>
+For Lazarus:<pre><samp>===========  Heap Monitor  ============
+  Maximum heap size        : 163.840
+  Maximum used heap size   : 1.216
+  Current heap size        : 163.840
+  Currently used heap size : 1.216
+  Currently free on heap   : 162.624
+=======================================
+</samp></pre></p>
+
+<p>The <a href="Tags_07b.htm#inline">inline versions</a> can be called 
+using the same tags, but suffixed with one, two or three '-' signs.<br>
+See also <a href="Monitoring_08.htm">"Monitoring Ram and heap"</a> and using 
+inline tags to retrieve RAM, heap and disk values.</p>
+
+<p><a name="timers"><br></a>
+<b>Local timers precision and overhead:</b><br>
+<br>
+If some parts of your code are timed, THotLog can be used to
+output a picture of the local environment timing capacities, through
+the <span class="const">'{Timers}'</span> tag 
+which will give you minimun resolutions and overhead cost for the 
+available timers.</p>
+
+<p><pre>hLog.add(<span class="const">'Timers}'</span>);               <span class="comment">// Retrieves timing informations</span>
+<samp>
+============================================  Timers resolution  ============================================
+                          |               Min resolution                 |       Api / call overhead
+           Timers         |----------------------------------------------|-----------------------------------
+                          |       ms      :       µs     :      ns       |     native    :   optimal
+--------------------------|----------------------------------------------|-----------------------------------
+  GetTickCount            |  15,---       :      n/s     :      n/s      |      0 ticks  : ms or s
+  QueryPerformanceCounter |   0,000320725 :  0,320724684 : 320,724683838 |      0 units  : s. (0,000000000)
+  ReadTimeStampCounter    |   0,000000313 :  0,000313283 :   0,313283208 |     18 cycles : ns (5,639097744)
+=============================================================================================================
+                                                                (n/a: not available, n/s : not significant)
+                                             QueryPerformanceFrequency returned : 2992530000 (native units)
+                                              (RDTSC min resolution from registry ; Overhead from asm call)
+=============================================================================================================
+</samp></pre></p>
+
+<p>Api or call overhead are given both in the timer "native unit" and in 
+THotLog's <a href="Timing_09.htm">TQTimer</a> instance 
+"<a href="Timing_09.htm#optimal">optimal time unit</a>" measure. it 
+can range from hours to
+nanoseconds, depending on the value computed. For example in the output
+above, QueryPerformance API overhead is expressed in micro seconds,
+whereas RDTSC call cost is given in nanoseconds  (right most column)<br>
+THotLog timer instance tried to find the "most easy to read" time unit
+conversion to output the result.</p>
+
+<p>More about this, together with THotLog code timing capacities in: 
+<a href="Timing_09.htm">"Timing code using TQTimers".</a></p>
+
+<p><a name="ruler"><br></a>
+<b>Ruler:</b><br>
+<br>
+The last standalone tag was usefull at design time, and may
+still be, so I left it. It outputs an horizontal ruler, on one or two
+lines, one made of dots and pipes, the other one of numbers. So it has
+two versions:<br>
+<br>
+<span class="const">'{ruler}'</span> will 
+output a single line of dots and pipes.<br>
+<span class="const">'{ruler+}'</span> will
+output a first line with numbers and then the one above.<br>
+<br>
+Output example:
+<pre><samp>    5    10   15   20   25   30   35   40   45   50   55   60   65   70   75   80
+....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|
+</samp></pre>
+The default length (80 positions) can be changed using the<br>
+<br>
+Procedure <b>THotLog.SetRulerLength(newLength: Integer);</b></p>
+
+<p>&nbsp;</p>
+
+<table class="Footer" width="100%">
+  <tbody>
+    <tr>
+      <td class="AppTitle"><p>THotLog</p></td>
+      <td class="LnkTitle" align="right">
+      <p><a class="sLink" href="Logging_06.htm">&laquo;  Previous</a> | <a class="sLink" href="Tags_07b.htm">Next &raquo;</a></p></td>
+    </tr>
+  </tbody>
+</table>
+
+</body>
+</html>

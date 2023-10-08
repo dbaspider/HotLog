@@ -1,0 +1,427 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1">
+  <title>Timing code</title>
+  <link rel="stylesheet" href="css/HLLayout.css">
+</head>
+<body link="#3366ff" vlink="#000099" alink="#000099">
+
+<table class="Header" width="100%">
+  <tbody>
+    <tr>
+      <td class="AppTitle"><p>THotLog</p></td>
+      <td class="LnkTitle" align="right"><p>[ <a class="sLink" href="https://sourceforge.net/projects/hotlog/">Home</a> ]</p></td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Heading">
+  <tbody>
+    <tr>
+      <td>Timing code</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="ident">
+
+<p>HotLog.pas contains the definition of another object, <b>TQTimer</b>, which may be used independently.<br>
+TQTimer provides means to time code with the highest possible
+precision, using four different counters, and giving measures either in
+the used counter native unit or in the time unit of your choice,
+with a precision ranging from hours to nanoseconds (depending on the
+systeme it executes on).<br>
+<br>
+TQTimer is an object. You can use as many instances of it as you want.<br>
+<br>
+This can be usefull for example to have an instance by counter tool
+used (GetTickCount, RDTSC, ...), and/or an instance by parts of code, ...</p>
+
+<p><a name="properties"><br></a>
+<b>TQTimer properties and routines:</b><br>
+<div class="ident">
+<i><u>Setup properties:</u></i><br>
+<br>
+
+<b>fmtOutput</b>: String;<br>
+<div class="ident">
+Format string used for the output. Passed to the Format( ) function.<br>
+<b>Default: '%3.9n'</b><br>
+</div> <! class="ident">
+<br>
+
+<b>timeUnitsWanted</b>: Set of TQTimeScale;<br>
+<div class="ident">
+<b>TQTimeScale</b> = (tsSeconds, tsMilliSec, tsMicroSec, tsNanosSec);<br>
+The delta between start and stop will be outputed in each unit stored there.<br>
+</div> <! class="ident">
+<br>
+
+<b>removeOverHead</b>: Boolean;<br>
+<div class="ident">
+If <b>True</b>, the API call overhead will be removed from deltas values.<br>
+(RDTSC ans QueryPerformanceCounter only, other counters' overhead being equal to 0)<br>
+</div> <! class="ident">
+
+<br>
+<b>deltaShowNatives</b>: Boolean;<br>
+<div class="ident">
+If <b>True</b>, deltas native units will be outputed too.<br>
+</div> <! class="ident">
+
+<br>
+<b>deltaShowOptimal</b>: Boolean;<br>
+<div class="ident">
+If <b>True</b>, deltas will be outputed in the most "readable" unit possible too.
+</div> <! class="ident">
+</p>
+
+<a name="optimal"><br></a>
+<div style="background-color: rgb(255, 255, 221); color: rgb(0, 0, 153); width: 80%; padding: 20px;">
+More about optimal time units:<br>
+<br>
+When a delta (difference between a Stop and a Start)
+is computed, the result is expressed in the counter native units
+(for example, CPU cycles for ReaDTimeStampCounter, accessed through 
+"aTimer.RDT( );").<br>
+This result can be translated by TQTimer in the time unit of your 
+choice, but could give something not really easy to read.<br>
+<br>
+The <b>deltaShowOptimal</b> property tells TQTimer that you want it to 
+find by itself the time unit which will give the "easiest to read" result.<br>
+<br>
+It is the one that will produce (if possible) a value 
+below 100.00, and above 0.01<br>
+For example, a measure giving 88 cycles (which is the most 
+frequent RDT overhead) will be expressed in nanoseconds as 
+29,411764706 instead of 0.0294117647 microseconds,
+or 0,000029412 milliseconds (to say nothing about seconds).<br>
+<br>
+Similarly, a measure of  665 "units" returned by 
+QueryPerformanceCounter would give, after translation, and 
+dependending on the QueryPerformanceFrequency returned value: 
+0,222219994 µs instead of 0,000222219 ns, or 222,219994 ms.
+</div> <!style="background-color: rgb(255, 255, 221); color: rgb(0, 0, 153); padding: 20px;">
+
+<p><b>Setup default values are</b>:<br>
+<pre>
+fmtOutput        := '%3.9n';
+timeUnitsWanted  := [];
+removeOverHead   := False;
+deltaShowNatives := True;
+deltaShowOptimal := True;
+</pre>
+<br>
+With these settings, the string returned by TQTimer.sDeltaFmt[n] 
+would give something like:<br>
+<font style="color: rgb(0, 0, 153);">
+"12554092 units, 2.984520047 ms"</font></p>
+
+<br>
+
+<a name="instanceMethodes"><br></a>
+<i><u>Instance methodes:</u></i><br>
+<br>
+<b>Constructor Create;</b><br>
+<div class="ident">
+In order to use TQTimer, you must instanciate it first.
+</div> <! class="ident">
+<br>
+<b>Destructor  Destroy; override;</b><br>
+<div class="ident">
+To be used (Through "aQTimer.Free"), when no longer needed.
+</div> <! class="ident">
+
+<br>
+
+<a name="measure"><br></a>
+<i><u>Measuring:</u></i><br>
+<br>
+All these functions return the value read.<br>
+They all wait for a parameter called "<b>startOrStop</b>", which represents 
+the wanted destination of the measure made.<br>
+It is of kind TQTimerAction, defined as:<br>
+<div class="ident">
+<br>
+<b>TQTimerAction = (taStart,taStop,taGlobalStop);</b> (taGlobalStop is used 
+internally)
+</div> <! class="ident">
+<br>
+(See below for more information ubout the way theses functions behave.)<br>
+<br>
+As you can see in the TQTimer code (HotLog.pas), the measure reading 
+is made before checking the <b>startOrStop</b> parameter, thus preserving 
+accuracy.
+
+<p>&nbsp;</p>
+
+<p>Function <b>HMS(startOrStop: TQTimerAction=taStart): TDateTime;</b>
+<div class="ident">
+Requests a TQTimer instance to store current time.
+</div> <! class="ident">
+</p>
+
+<p>Function <b>GTC(startOrStop: TQTimerAction=taStart): Integer;</b>
+<div class="ident">
+Requests a TQTimer instance to store GetTickCount current value.<br>
+GTC returns milliseconds.
+</div> <! class="ident">
+</p>
+
+<p>Function <b>QPC(startOrStop: TQTimerAction=taStart): Int64;</b>
+<div class="ident">
+Requests a TQTimer instance to store the result of a call
+to QueryPerformanceCounter API.<br>
+The returned value is the one read.<br>
+QueryPerformanceCounter doesn't work with an identified unit 
+(like milliseconds, or cycles) but in units that make sens only 
+when compared to themselves, and which interpretation rely on 
+the QueryPerformanceFrequency API returned value.
+However, TQTimer can translate them to the time unit(s) of
+your choice too.
+</div> <! class="ident">
+</p>
+
+<p>Function <b>RDT(startOrStop: TQTimerAction=taStart): Int64;</b>
+<div class="ident">
+Requests a TQTimer instance to store the result of a call
+to the CPU time stamp counter.<br>
+RDT returns CPU cycles.
+</div> <! class="ident">
+</p>
+
+<p>Procedure <b>GlobalStop;</b>
+<div class="ident">
+Searches in the storage table if a stop has been registered
+previously.<br>
+The first one found is copied into any free entry of the "stops"
+column of that table. If none is found, does nothing.<br>
+Can be usefull to give the same stop value to all the measures
+done until now.
+</div> <! class="ident">
+</p>
+
+<p>Procedure <b>Reset;</b>
+<div class="ident">
+Empties the storing table.
+</div> <! class="ident">
+</p>
+
+<div style="background-color: rgb(255, 255, 221); color: rgb(0, 0, 153); width: 80%; padding: 20px;">
+As long as the startOrStop parameter defaults to True, 
+calling any of the timers above without parms will add a Start value in the 
+storage table. Then, calling the same counter with "taStop" as parameter 
+will start filling the "stops" colum from top to bottom.<br>
+<br>
+Values read are stored in a single table by TQTimer 
+instance.<br>
+This means that you shouldn't mix counters tools in a same table, unless 
+you don't intend to use GlobalStop.<br>
+<br>
+When a timing tool (say for example aTimer.RDT) is 
+called with the parameter "<b>taStart</b>", a new line is added to the storage 
+table, and the value read is added into the first column of that new line.<br>
+When a timing tool is called with the parameter 
+"<b>taStop</b>", the result is added in the topmost free stop entry of the 
+table.<br>
+<i>Thus filling the table in the opposite order of the one used to 
+add Starts.</i><br>
+<br>
+The following pseudo-code illustrates this:<br>
+<pre>
+<span class="comment">//Calls QueryPerformanceCounter, and adds its return as a new Start</span>
+aTimer.QPC;           <span class="comment">// table = [<font color=blue>start1</font>, -1]</span>
+
+aTimer.QPC;           <span class="comment">// table = [start1, -1],</span>
+                      <span class="comment">//         [<font color=blue>start2</font>, -1]</span>
+
+aTimer.QPC(taStop);   <span class="comment">// table = [start1, -1],</span>
+                      <span class="comment">//         [start2, <font color=blue>firstStop</font>]</span>
+
+aTimer.QPC(taStop);   <span class="comment">// table = [start1, <font color=blue>newStop</font>],</span>
+                      <span class="comment">//         [start2, firststop];</span>
+</pre>
+A call to  aTimer.<b>GlobalStop</b>, after the 
+"firstStop", would have copied the "firstStop" value into table[0,1], instead 
+of adding it into the "newStop" value.
+</div> <! style="background-color: rgb(255, 255, 221); color: rgb(0, 0, 153); width: 80%; padding: 20px;">
+
+
+<a name="results"><br></a>
+<i><u>Retrieving values:</u></i><br>
+<br>
+Property <b>isFinalized: Boolean;</b><br>
+<div class="ident">
+If false, TQtimer couldn't initalize itself.
+</div> <! class="ident">
+<br>
+
+Property <b>RegistryFreq: int64;</b><br>
+<div class="ident">
+Returns a long int containing the CPU speed as stored into 
+the registry. Something like "866000000" for a 866 mhz proc.
+</div> <! class="ident">
+<br>
+
+Property <b>QueryPerfFreq: Int64;</b><br>
+<div class="ident">
+Returns the value of a call to QueryPerformanceFrequency API.<br>
+Used internally to convert native units to time units.
+</div> <! class="ident">
+<br>
+
+Property <b>ReaDTSCOverhead: int64;</b><br>
+<div class="ident">
+Returns the cost, in native units (cycles) of a 
+call to the ASM opcode RDTSC.
+</div> <! class="ident">
+<br>
+
+Property <b>QueryPerfOverhead : int64;</b><br>
+<div class="ident">
+Returns the cost, in native units of a call to 
+QueryPerformanceCounter API.
+</div> <! class="ident">
+<br>
+
+Property <b>Count: integer;</b><br>
+<div class="ident">
+Retunrs the actual number of entries in the storage table.
+</div> <! class="ident">
+<br>
+
+Property <b>iStart[ix: Integer]: int64;</b><br>
+<div class="ident">
+Returns the value stored at position [ix], for the START column,
+in the storage table, converted to an int64 (or -1 if ix is out 
+of bounds).
+</div> <! class="ident">
+<br>
+
+Property <b>iStop [ix: Integer]: int64;</b><br>
+<div class="ident">
+Returns the value stored at position [ix], for the STOP column,
+in the storage table, converted to an int64 (or -1 if ix is out 
+of bounds).
+</div> <! class="ident">
+<br>
+
+Property <b>iDelta[ix: Integer]: int64;</b><br>
+<div class="ident">
+Returns Stop - start for the entry [ix] of the storage table,
+converted to an int64, with or without overhead (depending
+on the setup property removeOverHead)
+(returns -1 if ix is out of bounds).
+</div> <! class="ident">
+<br>
+
+Property <b>sStart[ix: Integer]: String;</b><br>
+<div class="ident">
+Returns the start entry of line [ix] as string.<br>
+(returns '-1' if ix is out of bounds).
+</div> <! class="ident">
+<br>
+
+Property <b>sStop [ix: Integer]: String;</b><br>
+<div class="ident">
+Returns the start entry of line [ix] as string.<br>
+(returns '-1' if ix is out of bounds).
+</div> <! class="ident">
+<br>
+
+Property <b>sDelta[ix: Integer]: String;</b><br>
+<div class="ident">
+eturns the Stop - Start delta of line [ix] as string.<br>
+(returns '-1' if ix is out of bounds).
+</div> <! class="ident">
+<br>
+
+Property <b>iDeltaFmt[ix: Integer]: Extended;</b><br>
+<div class="ident">
+Returns the delta of line [ix] after conversion to real.<br>
+Returns 0.00 if ix is out of bound ;
+</div> <! class="ident">
+<br>
+
+Property <b>sDeltaFmt[ix: Integer]: String;</b><br>
+<div class="ident">
+Returns a string made of one or more parts, depending
+on the setup parameters:<br>
+If the counter used was HMS, returns only hh:mm:ss,
+otherwise, hads as many strings to the result as there are 
+wanted outputs, following the order:
+<ul>
+  <li>Native units (if deltaShowNatives)</li>
+  <li>Each time value, depending on the contents of timeUnitsWanted</li>
+  <li>The optimal time unit, (if deltaShowOptimal)</li>
+</ul>
+Returns an empty string in case of a problem.<br>
+<br>
+Each element in the string is followed by the symbol of the unit used 
+(ms for milliseconds, µs for microseconds, ...).
+</div> <! class="ident">
+
+<br>
+
+<p><a name="TQTExample"><br></a>
+<b>TQTimer example of use:</b></p>
+<pre>
+procedure TForm1.Button7Click(Sender:  TObject);
+var aTimer: TQTimer; 
+begin 
+  aTimer := TQTimer.Create; 
+  With aTimer Do 
+  Begin 
+    removeOverHead := True; 
+    Reset;              <span class="comment">// Makes sure its count is zero</span> 
+    QPC;                <span class="comment">// Start[0] Stores qpc value at startUp</span> 
+    QPC;                <span class="comment">// Start[1] Prepares measuring next step</span> 
+    Sleep(<span class="const">100</span>);      
+    QPC(taStop);        <span class="comment">// Stop[1] -> the length of DoPrepareEverything</span> 
+    QPC;  
+    Sleep(<span class="const">350</span>); 
+    QPC(taStop);        <span class="comment">// Stop[2] -> the length of DoMainJob</span> 
+    QPC; 
+    Sleep(<span class="const">50</span>); 
+    QPC(taStop);        <span class="comment">// Stop[3] -> the length of DoMainJob</span> 
+    GlobalStop;         <span class="comment">// Stop[0] -> Peered stop of the start[0]</span>
+  end; <span class="comment">{with}           // Receives the last Stop value</span> 
+
+  <span class="comment">// Now gets the value as a formatted string:</span> 
+  Memo1.Lines.Add(<span class="const">'Job      start : '</span> + aTimer.sStart[<span class="const">0</span>]; 
+  Memo1.Lines.Add(<span class="const">'1st Step start : '</span> + aTimer.sStart[<span class="const">1</span>] + <span class="const">'  stops : '</span> + aTimer.sStop[<span class="const">1</span>] + <span class="const">'  duration : '</span> + aTimer.sDeltaFmt[<span class="const">1</span>]); 
+  Memo1.Lines.Add(<span class="const">'2nd Step start : '</span> + aTimer.sStart[<span class="const">2</span>] + <span class="const">'  stops : '</span> + aTimer.sStop[<span class="const">2</span>] + <span class="const">'  duration : '</span> + aTimer.sDeltaFmt[<span class="const">2</span>]); 
+  Memo1.Lines.Add(<span class="const">'3rd Step start : '</span> + aTimer.sStart[<span class="const">3</span>] + <span class="const">'  stops : '</span> + aTimer.sStop[<span class="const">3</span>] + <span class="const">'  duration : '</span> + aTimer.sDeltaFmt[<span class="const">3</span>]); 
+  Memo1.Lines.Add(<span class="const">'Job      ended : '</span> + aTimer.sStop[<span class="const">0</span>]; 
+  Memo1.Lines.Add(<span class="const">'Job   duration : '</span> + aTimer.sDeltaFmt[<span class="const">0</span>]); 
+  aTimer.Free; 
+end;</pre>
+<br>
+Output will be something like this:
+<samp><pre>
+Job      start : 25183871800780
+1st Step start : 25183871803704  stops : 25184197376812  duration : 325573108 "units", 0,108794179 s
+2nd Step start : 25184197380260  stops : 25185272738342  duration : 1075358082 "units", 0,359343867 s
+3rd Step start : 25185272742054  stops : 25185459756194  duration : 187014140 "units", 62,493029380 ms
+Job      ended : 25185459756194
+Job   duration : 1587955414 "units", 0,530634445 s</pre></samp></p>
+
+</div> <! class="ident">
+
+<p>&nbsp;</p>
+
+<table class="Footer" width="100%">
+  <tbody>
+    <tr>
+      <td class="AppTitle"><p>THotLog</p></td>
+      <td class="LnkTitle" align="right"><p><a class="sLink" href="Monitoring_08.htm">&laquo; Previous</a> |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></td>
+    </tr>
+  </tbody>
+</table>
+
+</body>
+</html>

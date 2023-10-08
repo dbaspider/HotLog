@@ -1,0 +1,29 @@
+[OPTIONS]
+Compatibility=1.1 or later
+Compiled file=THotLog.chm
+Contents file=THotLog.hhc
+Default topic=Quickstart_03.htm
+Display compile progress=No
+Enhanced decompilation=Yes
+Full-text search=Yes
+Language=0x419 Русский
+Title=THotLog Component
+
+
+[FILES]
+Summary_01.htm
+Advisory_02.htm
+Quickstart_03.htm
+Instance_04.htm
+FileStp_05a.htm
+HLStp_05b.htm
+FeedBack_05c.htm
+Logging_06.htm
+Tags_07a.htm
+Tags_07b.htm
+Tags_07c.htm
+Monitoring_08.htm
+Timing_09.htm
+
+[INFOTYPES]
+

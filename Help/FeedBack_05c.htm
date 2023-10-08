@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1">
+  <title>Visual feedback (TMemo)</title>
+  <link rel="stylesheet" href="css/HLLayout.css"></head>
+<body link="#3366ff" vlink="#000099" alink="#000099">
+
+<table class="Header" width="100%">
+  <tbody>
+    <tr>
+      <td class="AppTitle"><p>THotLog</p></td>
+      <td class="LnkTitle" align="right"><p>[ <a class="sLink" href="https://sourceforge.net/projects/hotlog/">Home</a> ]</p></td></tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Heading">
+  <tbody>
+    <tr>
+      <td>Providing&nbsp; visual feedback using a TMemo</td>
+    </tr>
+  </tbody>
+</table>
+
+
+<div class="ident">
+
+<p>THotLog's aim is to logg strings into a file. However, you may want to
+provide your user visual feedback too. This can be done by assigning a
+TMemo to the THotLog instance you're using, and requesting it to output
+the logged lines to that memo.</p>
+
+<p>The memo is then accessed by a new thread (not the one which writes to
+the file). Adding lines into the memo is made within your application's
+main thread, througt the Synchronise( ); methode.</p>
+
+<p>The three following routines are to used through a THotLog Instance,
+like for example: <b>hLog.DisplayFeedBackInto(myMemo);</b></p>
+
+<p><a name="memoAssign"><br></a>
+Procedure <b>DisplayFeedBackInto(aMemo:TMemo);</b><br>
+<div class="ident">
+Requests THotLog's instance to output the logged lines into a memo too.
+This job is made by a third thread. It's done after the line(s) have been
+logged.<br>
+<b>aMemo</b> has to be a TMemo component created before you pass it to the
+procedure. It can be visible or not, but must exist.
+</div> <! class="ident">
+</p>
+
+<p><a name="memoStopFB"><br></a>
+Function <b>StopVisualFeedBack: Boolean;</b><br>
+<div class="ident">
+This can be an ESSENTIAL function, if your memo isn't upon the main form:
+See <a href="Advisory_02.htm#memoWarning">MEMO USAGE WARNING</a>.<br>
+StopVisualFeedback doesn't stop the feedBack thread, but tells the writer
+thread to stop accessing that thread, and tells the feeBack thread to stop 
+accessing the memo.<br>
+The feedBack thread is still available, and can be launched again
+through a new call to DisplayFeedBackInto(aMemo:TMemo);<br>
+The function returns True if it succeeds, False otherwise. You should
+ALLWAYS check this result before choosing whether closing or hidding
+the form upon which your log feedback memo is, if it isn't on your
+application's main Form.
+</div> <! class="ident">
+</p>
+
+<p><a name="memoScroll"><br></a>
+Procedure <b>ScrollMemo(doScroll:Boolean);</b><br>
+<div class="ident">
+<p>If <b>True</b>, the memo will allways autoscroll down, to show it's last line.<br>
+If <b>False</b>, THotLog doesn't manage the scrolling.<br>
+(Remark : ScrollMemo(True) will have visible effects at run-time, but sometimes NOT when debbugging.)
+</div> <! class="ident">
+</p>
+
+<p><a name="memoLimit"><br></a>
+Procedure <b>SetMemoLimit(value: Cardinal);</b><br>
+<div class="ident">
+Upadte provided by Oleg Danilov (<a href="http://www.rapidfd.com/">rapidfd.com</a>)<br>
+It allows to set a limit to the number of lines displayed by the memo used for the visual feedback.
+This can be usefull to handle the 32kb limit of the TMemo component under W98 and bellow, or
+simply to avoid huge outputs.
+</div> <! class="ident">
+</p>
+
+</div> <! class="ident">
+
+<p>&nbsp;</p>
+
+<table class="Footer" width="100%">
+  <tbody>
+    <tr>
+      <td class="AppTitle"><p>THotLog</p></td>
+      <td class="LnkTitle" align="right"><p><a class="sLink" href="HLStp_05b.htm">&laquo; Previous</a> | <a class="sLink" href="Logging_06.htm">Next &raquo;</a></p></td>
+    </tr>
+  </tbody>
+</table>
+
+</body>
+</html>

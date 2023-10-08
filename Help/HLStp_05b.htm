@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1">
+  <title>THotLog setup</title>
+  <link rel="stylesheet" href="css/HLLayout.css">
+</head>
+<body link="#3366ff" vlink="#000099" alink="#000099">
+<table class="Header" width="100%">
+  <tbody>
+    <tr>
+      <td class="AppTitle"><p>THotLog</p></td>
+      <td class="LnkTitle" align="right"><p><a class="sLink" href="https://sourceforge.net/projects/hotlog/">[Home]</a></p></td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Heading">
+  <tbody>
+    <tr>
+      <td>HLog general setup</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="ident">
+
+<p>These functions must be called <b>before</b> calling 
+<a href="Instance_04.htm#startLogging">hLog.StartLogging</a> or any hLog.Add methode.</p>
+
+<p><a name="errorCaption"><br></a>
+Procedure <b>SetErrorCaption(value: String; surroundChar: String; jumpLines: Boolean=True);</b><br>
+<div class="ident">
+"value" is a string property used to prefetch error lines.
+(Error lines are the one outputed using THotLog.AddException()
+and THotLog.AddError() methodes.) "value" will be used unchanged.<br>
+"surroundChar" will be duplicated up to the length of "value", 
+or up to at least 80 chars, depending on errorViewStyle
+(see below: SetErrorViewStyle).<br>
+If a surrond char is provided, this "surronding string" will
+be added before and after the error line.<br>
+<br>
+<i>(See <a href="Logging_06.htm#addException">hLog.AddException</a>
+to view examples of outputs depending on the parameters above)</i>
+</div> <! class="ident">
+</p>
+
+<p><a name="errorViewStyle"><br></a>
+Procedure <b>SetErrorViewStyle(value: TVarRecStyle);</b><br>
+<div class="ident">
+TVarRecStyle = (vsNone, vsBasic, vsExtended);<br>
+When set to <b>vsBasic</b>, the arguments passed to hLog error logging
+methodes will be outputed in one line, surrounded by parenthesis,
+and separated by a comma.<br>
+When set to <b>vsExtended</b>, the arguments will be formatted and 
+outputed, one by line, in such a way to give as much details as
+possible on each.<br>
+<br>
+(<b>vsNone</b> should not be used there. It is used in the overloaded version of 
+THotLog.Add( ), which deals with arrays of const.<br>
+<br>
+<i>(See <a href="Logging_06.htm#addException">hLog.AddException</a>
+to view examples of outputs depending on viewStyle)</i>
+</div> <! class="ident">
+</p>
+
+<p><a name="rulerLength"><br></a>
+Procedure <b>SetRulerLength(newLength: Integer);</b><br>
+<div class="ident">
+THotLog can output a ruler on one or two lines.<br>
+It was usefull at design time, and can still be, so
+I left it. It's default length is 80 bytes, and can
+be set up to ten thousand.<br>
+<br>
+The ruler will be outputed when you'll pass the 
+<a href="Tags_07a.htm#ruler">ruler tag</a> to a parsing function.
+</div> <! class="ident">
+</p>
+
+<p><a name="modifyLineNum"><br></a>
+Function <b>ModifyLineNumbering(doShow: Boolean; alignment: TAlignment=taRightJustify; size: Integer=3): Boolean;</b><br>
+<div class="ident">
+THotLog maintains a line count, and can show line numbers.<br>
+<br>
+If <b>DoShow = True</b>, lines numbers are displayed,<br>
+<b>alignment</b> can be <b>alLeft</b> or <b>alRight</b> (center is ignored...).<br>
+<b>size</b> is the number of characters you want the line numbers
+to be aligned to. Line numbers are followed by a space.<br>
+<br>
+Line numbers will typically be added at the begining of any line, aligned right,
+on 3 positions (size:=3) , padded with space(s), and followed by one more space.<br>
+<br>
+Line numbers are <b>NOT</b> displayed by default. The hlParser constructor sets line 
+numbering fields to:<br>
+<b>(doShow: False;  alignment: taRightJustify;  size:3);</b><br>
+<br>
+Line counting is allways maintained, be line numbers displayed or not.<br>
+<br>
+If the line number representation grows above "size" (for example if you did set
+size to 3 and your log reaches 1000 lines (!), then the size parameter is
+ignored (unless you change it for something bigger).<br>
+<br>
+Line numbering is a global parameter, that can be temporarily overrided by the use of the
+<a href="Tags_07b.htm#LNumbers">line numbering tag</a>.
+</div> <! class="ident">
+</p>
+
+</div> <! class="ident">
+
+<p>&nbsp;</p>
+
+<table class="Footer" width="100%">
+  <tbody>
+    <tr>
+      <td class="AppTitle"><p>THotLog</p></td>
+      <td class="LnkTitle" align="right"><p><a class="sLink" href="FileStp_05a.htm">&laquo; Previous</a> | <a class="sLink" href="FeedBack_05c.htm">Next &raquo;</a></p></td>
+    </tr>
+  </tbody>
+</table>
+
+</body>
+</html>

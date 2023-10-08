@@ -1,0 +1,16 @@
+td.AppTitle { font-weight:bold; font-size:12px; color:RGB(102,102,102); }
+td.LnkTitle { text-align:right; }
+table.Footer { bottom:0; font-family:Verdana; font-style:normal; font-weight:normal; font-size:8pt; line-height:24px; text-decoration:none; padding-top:0; padding-bottom:0; border-top-width:1px; border-right-width:0px; border-bottom-width:0px; border-left-width:0px; border-top-color:RGB(178,179,136); border-top-style:solid; border-right-style:none; border-bottom-style:none; border-left-style:none; }
+a.Link { font-family:Verdana,sans-serif; font-style:normal; font-weight:normal; font-size:8pt; color:blue; text-decoration:none; }
+a.Link:hover { text-decoration:underline; }
+a.sLink { font-family:Verdana,sans-serif; font-style:normal; font-weight:normal; font-size:8pt; color:RGB(102,102,102); text-decoration:none; }
+a.sLink:hover { text-decoration:underline; }
+
+html {font-family:Verdana; font-size:10pt; color: rgb(60, 60, 60); background-color: rgb(255, 255, 255); }
+samp {color: rgb(0, 0, 153); }
+table {font-family:Verdana; font-size:10pt; }
+table.Heading {width: 100%; text-align: left; background-color: rgb(178, 179, 136); border-spacing: 4; color: rgb(255, 255, 255);}
+table.Header { font-family:Verdana; font-style:normal; font-weight:normal; font-size:8pt; line-height:24px; text-decoration:none; padding-top:0; padding-bottom:0; border-top-width:0px; border-right-width:0px; border-bottom-width:1px; border-left-width:0px; border-bottom-color:RGB(178,179,136); border-top-style:none; border-right-style:none; border-bottom-style:solid; border-left-style:none; }
+.ident {margin-left: 40px; }
+.comment {color: green; }
+.const {color: purple; }

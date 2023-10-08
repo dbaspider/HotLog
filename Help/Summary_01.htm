@@ -1,0 +1,255 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1">
+  <title>THotLog summary and licence</title>
+  <link rel="stylesheet" href="css/HLLayout.css">
+</head>
+
+<body alink="#000099" link="#3366ff" vlink="#000099">
+
+<table class="Header" width="100%">
+  <tbody>
+    <tr>
+      <td class="AppTitle"><p>THotLog</p></td>
+      <td class="LnkTitle" align="right"><p><a class="sLink" href="https://sourceforge.net/projects/hotlog/">[Home]</a></p></td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Heading">
+  <tbody>
+    <tr>
+      <td>What is new</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="ident">
+<p>v 3.3 (2019-02) Rolf Wetjen (rolf.wetjen@mail.de)</p>
+<ul>
+  <li>CheckLogFiles moved to THotLogWriter.Execute</li>
+  <li>THotLogWriter.Execute: F is TFileStreamUTF8</li>
+  <li>References to unit RWUtils removed</li>
+  <li>Additional index FSaveIndex for safe filenames in THLFileDef</li>
+  <li>ddname can be used to set a prefix for safe filenames<br>
+      Filename in this case: ddname-yyyymmddd-hhnnss-FSafeIndex</li>
+  <li>SafeGdgMax now working</li>
+  <li>UseFileSizeLimit, FUseSizeLimit removed. Set LogFileMaxSize > 0 instead.</li>
+  <li>References to CodeSiteLogging removed</li>
+</ul>
+<p>v 3.2.1 (2017-07) Rolf Wetjen (rolf.wetjen@mail.de)</p>
+<ul>
+  <li>Bug fixing</li>
+</ul>
+<p>v 3.2&nbsp;&nbsp; (2017-01) Rolf Wetjen (rolf.wetjen@mail.de)</p>
+<ul>
+  <li>FormatDateTime(..,Now) replaced with DateTimeToStr</li>
+  <li>THotLogWriter CreateFile &amp; OpenFile with flag
+FILE_FLAG_WRITE_THROUGH</li>
+</ul>
+<p>v 3.1 &nbsp; (2016-05) Rolf Wetjen (rolf.wetjen@mail.de)</p>
+<ul>
+  <li>No need to call THotLog.StartLogging. THotLog.Add... will do this.</li>
+  <li>New property THotLog.Started</li>
+  <li>Bug fixing</li>
+</ul>
+<p>v 3.0&nbsp;&nbsp; (2016-05) Rolf Wetjen (rolf.wetjen@mail.de)</p>
+<ul>
+  <li>Support for Delphi XE7 and Lazarus 3.0</li>
+  <li>Logfile is UTF8 encoded</li>
+  <li>Heap monitoring changed (GetMemoryManagerState (Delphi) /
+GetFPCHeapStatus (Lazarus)</li>
+  <li>Ram monitoring changed (GlobalMemoryStatusEx)</li>
+  <li>Unicode string support for Delphi</li>
+  <li>UTF8 string support for Lazarus</li>
+  <li>Bug fixing and some redesign</li>
+</ul>
+
+<p>The v 2.0 of HotLog gives you the possibility to define a maximum size 
+for the log file. Once this maximum is reached, HotLog's instance will
+close it's file, and open a new one. This "most wanted feature" has
+been added by Robert Becker. Many thanks go to him.
+<br>
+In order to find more about this new feature, please go to the <a href="FileStp_05a.htm#LogFileMaxSize">Log
+file definition</a> page.
+</p>
+<p>v 2.1 is an extention of v 2.0 by Femi
+Fadayomi, adding the support for Delphi 5 (See readme.txt
+file for D5 install).
+</p>
+<p>v 2.2, by Luis Gonzalo Constantini Von Rickel, enhances the
+management
+of the memo used for the visual feedback, and fixes a possible AV when
+creating the log file.<br>
+</p>
+</div> <! class="ident">
+
+<p>&nbsp;</p>
+
+<table class="Heading">
+  <tbody>
+    <tr>
+      <td>About HotLog.pas & Licence</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="ident">
+<p>HotLog.pas is a Delphi unit which groups object definitions,
+routines,
+aso in order to fully manage a log file for you.
+<br>
+It has been written with Delphi 6 (PE).
+</p>
+<p><b>Licence</b>
+<br>
+This unit is freeware, but under copyrights that remain mine for my
+parts of
+the code, and original writers for their
+parts of the code. This is mainly the case about "variant open array
+parameters" copying routines, that come from Rudy Velthuis'
+pages on the web at <a href="http://rvelthuis.bei.t-online.de/index.htm">
+http://rvelthuis.bei.t-online.de/index.htm</a>.
+<br>
+This unit can be freely used in any application, freeware, shareware or
+commercial. However, I would apreciate
+you sending me an email if you decide to use it. Of course, you use it
+under your own and single responsability.
+Neither me, nor contributors could be held responsible for any problem
+resulting from the use of this unit.&nbsp; ;-)
+<br>
+It can also be freely distributed, provided all this licence remain
+within
+it unchanged, and that the readme.txt and this help file are
+distributed with it too.
+</p>
+<p>Latest version, bug corrections, aso are available at <a href="http://mapage.noos.fr/qnno/pages/delphi_fr.htm">http://mapage.noos.fr/qnno/pages/delphi_fr.htm</a>
+</p>
+<p>Copyright © 2004,2005 Olivier Touzot ( qnno@noos.fr )
+</p>
+<p>&nbsp;</p>
+<p><span style="font-style: italic;">Code highlighting in the present
+document often made with Chami's online
+code highlighter at <a href="http://www.chami.com/colorizer/">http://www.chami.com/colorizer/</a>
+</span></p>
+</div> <! class="ident">
+
+<p>&nbsp;</p>
+
+<table class="Heading">
+  <tbody>
+    <tr>
+      <td>Features</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="ident">
+
+<ul type="disc">
+  <li style="margin-bottom: 12px;">Multithreaded, object oriented,
+buffered safe. The log file will
+be correctly written
+to disk, even if your application crashes. The
+logging/parsing/formating and optionnal
+visual feedback work don't consume your main thread's time. You can use
+as many instances of THotLog as you want.</li>
+  <li style="margin-bottom: 12px;">Management of the log file itself
+    <ul>
+      <li>Path, name, extention (including [optional] generation 
+(".001", ".002", ...) based ones)</li>
+      <li>Access (openning, writting, closing) and dealing with older 
+version(s) when generations are used)</li>
+      <li><b>Ability to close the log file when it reaches a certain size
+limit, then open a new one.</b></li>
+      <li>Any default value / behaviour can be easily changed</li>
+    </ul></li>
+  <li style="margin-bottom: 12px;">Fully "automated": The logging object instance is
+created at your application start-up, you can use it directly if you
+decide to change none of the default settings. Similarly, everything is
+freed when needed. However, any setting can be changed either before
+beginning to logg, and/or (for some of them) during run-time.</li>
+  <li style="margin-bottom: 12px;">Provides means of easily retrieving informations
+about the environment your user is actually working with, in order to
+facilitate debugging, in case of need. These informations
+include numbers and facts about the operating system, the memory, the
+system's timing accuracy, and much more</li>
+  <li style="margin-bottom: 12px;">Provides easy-to-use strings formating capabilities, to have your
+logs presented cleanly</li>
+  <li style="margin-bottom: 12px;">Ability to output detailed informations in case of
+exceptions occuring, includding the ability to deal with 
+"variant open array parameter" (thanks Rudy
+V.): All you have to do is to give the exceptions logging methodes
+some datas like they are (for example the list of the parameters
+received by the function), without wondering whether they are integers or strings,
+valid pointers, uninitialized or dangling ones, aso. The log object instance will
+mind his own business with all that stuff</li>
+  <li style="margin-bottom: 12px;">Can be assigned a memo, in order to provide your user visual
+feedback</li>
+  <li style="margin-bottom: 12px;">Provides code timing features too, with a resolution going from
+seconds to nanoseconds, and from ticks to cycles depending on your user's
+computer, and the timer you choose</li>
+  <li style="margin-bottom: 12px;">Many options are available, to allow you to change HotLog's
+default behaviour</li>
+  <li>More, and more, ...</li>
+</ul>
+
+</div <!style="margin-left: 40px;">
+
+<p>&nbsp;</p>
+
+<table class="Heading">
+  <tbody>
+    <tr>
+      <td>Acknowledgment</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="ident">
+<p>Many thanks go to all the people who encouraged me, and more
+particularly to those who contibuted to HotLog evolution:
+<br></p>
+<ul type="disc">
+  <li style="margin-bottom: 12px;">Femi Fadayomi, who did add Delphi 5
+support.</li>
+  <li style="margin-bottom: 12px;">Robert Becker
+(rbecker@compuserve.com), who brought to us, hLog users, what
+was certainly the "most wanted" feature : HotLog can now be limited in
+size, and automatically opens a new file when a certain size limit
+isreached.</li>
+  <li style="margin-bottom: 12px;">Guillaume Cornu, for
+fixing the GetRegValue() function</li>
+  <li style="margin-bottom: 12px;">Oleg Danilov,
+who added the SetMemoLimit() procedure</li>
+  <li style="margin-bottom: 12px;">Luis Gonzalo Constantini Von Rickel,
+who did a great fix in the FileCreate()
+function, and worked a lot on the visual feedback part</li>
+  <li style="margin-bottom: 12px;">Vittorio Loschi, who corrected the
+buggy SetFileName() procedure</li>
+  <li style="margin-bottom: 12px;">"Sergueï" who
+fixed a sometimes incorrect initialization</li>
+  <li style="margin-bottom: 12px;">Jean-Philippe R. who tracked and
+fixed a bug occuring in "append" mode</li>
+</ul>
+<p>Thank you to all of you!</p>
+
+</div> <! class="ident">
+
+<p>&nbsp;</p>
+
+<table class="Footer" width="100%">
+  <tbody>
+    <tr>
+      <td class="AppTitle"><p>THotLog</p></td>
+      <td class="LnkTitle" align="right"><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a class="sLink" href="./Advisory_02.htm">Next»</a></p></td>
+    </tr>
+  </tbody>
+</table>
+
+</body>
+</html>

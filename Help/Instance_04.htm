@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1">
+  <title>THotLog instances</title>
+  <link rel="stylesheet" href="css/HLLayout.css">
+</head>
+<body link="#3366ff" vlink="#000099" alink="#000099">
+<table class="Header" width="100%">
+  <tbody>
+    <tr>
+      <td class="AppTitle"><p>THotLog</p></td>
+      <td class="LnkTitle" align="right"><p>[ <a class="sLink" href="https://sourceforge.net/projects/hotlog/">Home</a> ]</p></td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Heading">
+  <tbody>
+    <tr>
+      <td>THotLog instances</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="ident">
+
+<p><b>THotLog</b> is an object. You can use as many <a href="Advisory_02.htm#instancesDecl">instances</a> as you need.<br>
+<br>
+The <b>HotLog.pas</b> unit defines a global instance variable <b>hLog: THotLog;</b>:<br>
+<b>HLog</b> is created at application start and is freed during terminate.</p>
+
+<p>If your application uses only one log file, <b>hLog</b> will do the job.
+Otherwise, you can create other instances of <b>THotLog</b>.</p>
+
+<p>&nbsp;</p>
+
+<p><b>constructor</b> Create;<br>
+<div class="ident">
+Use it if you need more instances of THotLog. (<i>Don't use it with hLog !</i>)<br>
+</div> <! class="ident">
+<br>
+<br>
+<b>destructor</b> Destroy; <b>override</b>;<br>
+<br>
+<div class="ident">
+If you create new instances of THotLog, you should "free" them if no longer needed. (<i>Don't use it with hLog !</i>)<br>
+</div> <! class="ident">
+
+<br>
+<a name="startLogging"><br></a>
+<b>Procedure</b> StartLogging;<br>
+<br>
+<div class="ident">
+Initialize the THotLog instance. Start the parser and writer threads and open the log file.<br>
+Can be called explicitly or is call internally by all THotlog.<b>Add...</b> procedures at the first use.
+</div> <! class="ident">
+</p> 
+
+<p>&nbsp;</p>
+
+<p><u>Example of use:</u><br>
+<div class="ident">
+<pre>
+var anOtherLog: <b>THotLog</b>;
+
+...
+
+anOtherLog := THotLog.<b>Create</b>;
+
+<span class="comment">// Modify anOtherLog properties if needed.</span>
+
+<span class="comment">// Call <b>StartLogging</b> before beeing able to write to the log file.
+// Remember: The anOtherLog.Add... procedures will do this automated.</span> 
+anOtherLog.<b>StartLogging</b>;
+
+<span class="comment">// You can now use anOtherLog.</span>
+
+...
+
+<span class="comment">// Don't forget to free it when no longer needed</span>
+anOtherLog.<b>Free</b>;
+</pre>
+</div> <! class="ident">
+</p>
+
+</div> <! class="ident">
+<p>&nbsp;</p>
+
+<table class="Footer" width="100%">
+  <tbody>
+    <tr>
+      <td class="AppTitle"><p>THotLog</p></td>
+      <td class="LnkTitle" align="right"><p><a class="sLink" href="Quickstart_03.htm">&laquo; Previous</a> | <a class="sLink" href="FileStp_05a.htm">Next &raquo;</a></p></td>
+    </tr>
+  </tbody>
+</table>
+
+</body>
+</html>
